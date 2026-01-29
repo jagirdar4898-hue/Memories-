@@ -34,7 +34,6 @@
     <footer>
         &copy; 2026 Jagirdar Pawan. All Rights Reserved.
     </footer>
-
 <script>
     const gallery = document.getElementById('main-gallery');
 
@@ -42,36 +41,34 @@
     for (let i = 1; i <= 13; i++) {
         gallery.innerHTML += `
             <div class="card">
-                <img src="${i}.jpg" loading="lazy">
+                <img src="${i}.jpg" loading="lazy" onerror="this.src='${i}.jpeg'">
                 <div class="label">Photo ${i}</div>
             </div>`;
     }
 
-    // 2. Local Videos (Sirf 14, 15, 16)
-    // 18 ko humne yahan se hata diya hai
+    // 2. Local Videos (14, 15, 16)
     const localVideos = [14, 15, 16];
-    
     localVideos.forEach(num => {
-        // 15 number ke liye special force load
-        let vSrc = (num === 15) ? `${num}.mp4?v=new` : `${num}.mp4`;
+        // 15 number ke liye humne naya naam 'test15.mp4' set kiya hai
+        let vName = (num === 15) ? "test15.mp4" : num + ".mp4";
         
         gallery.innerHTML += `
             <div class="card">
-                <video controls playsinline preload="metadata">
-                    <source src="${vSrc}" type="video/mp4">
+                <video controls playsinline preload="auto">
+                    <source src="${vName}?v=final" type="video/mp4">
                     Browser support nahi karta.
                 </video>
                 <div class="label">Video ${num}</div>
             </div>`;
     });
 
-    // 3. YouTube Video (Number 17)
-    const ytID = "IgM1lAXppwI"; 
+    // 3. YouTube Video (Number 17) - Direct Embed Fix
     gallery.innerHTML += `
         <div class="card">
-            <iframe width="100%" height="250" 
-                src="https://www.youtube.com/embed/${ytID}" 
+            <iframe width="100%" height="280" 
+                src="https://www.youtube.com/embed/IgM1lAXppwI" 
                 frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                 allowfullscreen>
             </iframe>
             <div class="label">Video 17 (YouTube)</div>
