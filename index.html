@@ -3,23 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jagirdar Pawan | Gallery</title>
+    <title>Jagirdar Pawan Gallery</title>
     <style>
         :root { --gold: #d4af37; --dark: #0a0a0a; }
-        body { background-color: var(--dark); color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; }
-        
-        header { padding: 50px 20px; text-align: center; border-bottom: 2px solid var(--gold); background: linear-gradient(to bottom, #1a1a1a, #0a0a0a); }
-        h1 { font-size: 3.5rem; color: var(--gold); margin: 0; letter-spacing: 5px; text-shadow: 2px 2px 10px rgba(212, 175, 55, 0.5); text-transform: uppercase; }
-        
-        .gallery-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 40px; max-width: 1200px; margin: auto; }
-        
-        .card { background: #151515; border: 1px solid #333; border-radius: 15px; overflow: hidden; transition: 0.4s; position: relative; }
-        .card:hover { transform: translateY(-10px); border-color: var(--gold); box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2); }
-        
-        img, video { width: 100%; height: 250px; object-fit: cover; border-bottom: 1px solid #222; }
-        .label { padding: 15px; text-align: center; font-weight: bold; color: #ccc; font-size: 0.9rem; }
-        
-        footer { text-align: center; padding: 40px; color: #555; font-size: 0.8rem; }
+        body { background-color: var(--dark); color: white; font-family: sans-serif; margin: 0; text-align: center; }
+        header { padding: 40px; border-bottom: 2px solid var(--gold); background: #1a1a1a; }
+        h1 { color: var(--gold); font-size: 2.5rem; letter-spacing: 3px; text-transform: uppercase; margin: 0; }
+        .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; padding: 30px; }
+        .card { background: #151515; border-radius: 12px; overflow: hidden; border: 1px solid #333; transition: 0.3s; }
+        .card:hover { transform: scale(1.03); border-color: var(--gold); }
+        img, video { width: 100%; height: 250px; object-fit: cover; }
+        .name { padding: 10px; font-size: 0.8rem; color: #888; }
     </style>
 </head>
 <body>
@@ -28,40 +22,33 @@
         <h1>JAGIRDAR PAWAN</h1>
     </header>
 
-    <div class="gallery-container" id="media-gallery">
+    <div class="gallery" id="media-gallery">
         </div>
 
-    <footer>
-        &copy; 2026 Jagirdar Pawan. All Rights Reserved.
-    </footer>
-
     <script>
-        // --- APNI FILES YAHAN ADD KAREIN ---
-        // GitHub par file ka naam exactly waisa hona chahiye jaisa folder mein hai
-        const photos = ["photo1.jpg", "photo2.jpg", "img3.png"]; 
-        const videos = ["video1.mp4", "shayar.mp4"];
+        // --- SIRF YE DO CHEEZAIN BADLEIN ---
+        const username = "APKA_GITHUB_USERNAME"; // Apna GitHub naam likhein
+        const repo = "APKI_REPO_KA_NAAM";       // Apni repository ka naam likhein
 
-        const gallery = document.getElementById('media-gallery');
+        async function loadGallery() {
+            const gallery = document.getElementById('media-gallery');
+            try {
+                const response = await fetch(`https://api.github.com/repos/${username}/${repo}/contents/`);
+                const files = await response.json();
 
-        // Render Photos
-        photos.forEach(file => {
-            gallery.innerHTML += `
-                <div class="card">
-                    <img src="${file}" loading="lazy">
-                    <div class="label">${file}</div>
-                </div>`;
-        });
-
-        // Render Videos
-        videos.forEach(file => {
-            gallery.innerHTML += `
-                <div class="card">
-                    <video controls>
-                        <source src="${file}" type="video/mp4">
-                    </video>
-                    <div class="label">${file}</div>
-                </div>`;
-        });
+                files.forEach(file => {
+                    const name = file.name.toLowerCase();
+                    if (name.match(/\.(jpg|jpeg|png|webp|gif)$/)) {
+                        gallery.innerHTML += `<div class="card"><img src="${file.download_url}"><div class="name">${file.name}</div></div>`;
+                    } else if (name.match(/\.(mp4|webm|mov)$/)) {
+                        gallery.innerHTML += `<div class="card"><video controls src="${file.download_url}"></video><div class="name">${file.name}</div></div>`;
+                    }
+                });
+            } catch (e) {
+                console.error("Error loading files:", e);
+            }
+        }
+        loadGallery();
     </script>
 </body>
 </html>
