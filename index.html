@@ -37,11 +37,11 @@
 <script>
     const gallery = document.getElementById('main-gallery');
 
-    // 1. Photos (1 se 13 tak)
+    // 1. Photos (1-13)
     for (let i = 1; i <= 13; i++) {
         gallery.innerHTML += `
             <div class="card">
-                <img src="${i}.jpg" loading="lazy" onerror="this.src='${i}.jpeg'">
+                <img src="${i}.jpg" loading="lazy">
                 <div class="label">Photo ${i}</div>
             </div>`;
     }
@@ -49,27 +49,25 @@
     // 2. Local Videos (14, 15, 16)
     const localVideos = [14, 15, 16];
     localVideos.forEach(num => {
-        // 15 number ke liye humne naya naam 'test15.mp4' set kiya hai
-        let vName = (num === 15) ? "test15.mp4" : num + ".mp4";
+        // Hum 15 ke liye 'clip15.mp4' use kar rahe hain
+        let vName = (num === 15) ? "clip15.mp4" : num + ".mp4";
         
         gallery.innerHTML += `
             <div class="card">
-                <video controls playsinline preload="auto">
-                    <source src="${vName}?v=final" type="video/mp4">
+                <video controls playsinline preload="auto" style="background: black;">
+                    <source src="${vName}" type="video/mp4">
                     Browser support nahi karta.
                 </video>
                 <div class="label">Video ${num}</div>
             </div>`;
     });
 
-    // 3. YouTube Video (Number 17) - Direct Embed Fix
+    // 3. YouTube Video (17)
     gallery.innerHTML += `
         <div class="card">
             <iframe width="100%" height="280" 
                 src="https://www.youtube.com/embed/IgM1lAXppwI" 
-                frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen>
+                frameborder="0" allowfullscreen>
             </iframe>
             <div class="label">Video 17 (YouTube)</div>
         </div>`;
