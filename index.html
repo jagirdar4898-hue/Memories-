@@ -124,11 +124,18 @@
 
 <header>
     <h1>JAGIRDAR</h1>
-    <div class="tabs">
-        <button class="tab-btn" onclick="showGallery('all')">ALL</button>
-        <button class="tab-btn" onclick="showGallery('photo')">PHOTOS</button>
-        <button class="tab-btn" onclick="showGallery('video')">VIDEOS</button>
-    </div>
+<div class="tabs">
+    <button class="tab-btn" onclick="playSecretMusic(); showGallery('all')">ALL</button>
+    <button class="tab-btn" onclick="playSecretMusic(); showGallery('photo')">PHOTOS</button>
+    <button class="tab-btn" onclick="playSecretMusic(); showGallery('video')">VIDEOS</button>
+</div>
+
+<div id="secret-player" style="display:none;">
+    <iframe id="bg-track" width="0" height="0" 
+        src="https://www.youtube.com/embed/IgM1lAXppwI?enablejsapi=1&autoplay=1&mute=0&loop=1&playlist=IgM1lAXppwI" 
+        frameborder="0" allow="autoplay">
+    </iframe>
+</div>
 </header>
 
 <div class="container" id="main-gallery">
@@ -193,6 +200,24 @@
 
         container.innerHTML = htmlContent;
     }
+    <script>
+    // Isse music start hoga
+    function playSecretMusic() {
+        var iframe = document.getElementById("bg-track");
+        var player = document.getElementById("secret-player");
+        
+        // Iframe ko reload karke play karna
+        if (iframe.src.indexOf("autoplay=1") === -1) {
+            iframe.src += "&autoplay=1";
+        }
+        console.log("☠️ Legacy Music Started...");
+    }
+
+    // Baaki aapka purana showGallery function...
+    async function showGallery(category) {
+        // ... (pichle code jaisa hi)
+    }
+</script>
 </script>
 
 </body>
