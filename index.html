@@ -8,168 +8,131 @@
         :root {
             --gold: #d4af37;
             --premium-black: #050505;
-            --glass: rgba(255, 255, 255, 0.03);
         }
 
         body {
             margin: 0;
             background: var(--premium-black);
             color: white;
-            font-family: 'Cinzel', serif; /* Royal look ke liye */
+            font-family: 'Segoe UI', sans-serif;
             text-align: center;
+            /* ☠️ Background Emoji Logic */
+            background-image: radial-gradient(circle, rgba(0,0,0,0.8) 0%, #050505 100%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 100 100'%3E%3Ctext y='50' font-size='30' opacity='0.1'%3E☠️%3C/text%3E%3C/svg%3E");
+            background-attachment: fixed;
         }
 
-        header {
-            padding: 60px 20px;
-            background: radial-gradient(circle, rgba(212,175,55,0.1) 0%, transparent 70%);
-        }
-
+        header { padding: 60px 20px; }
         header h1 {
-            font-size: 3.5rem;
+            font-size: 3rem;
             color: var(--gold);
-            letter-spacing: 12px;
+            letter-spacing: 10px;
             text-transform: uppercase;
-            text-shadow: 0 0 30px rgba(212,175,55,0.4);
-            margin-bottom: 40px;
+            text-shadow: 0 0 20px rgba(212,175,55,0.5);
+            margin-bottom: 30px;
         }
 
         /* LEGENDARY BUTTONS */
-        .tabs {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
+        .tabs { margin-bottom: 40px; }
         .tab-btn {
             background: transparent;
             border: 2px solid var(--gold);
             color: var(--gold);
-            padding: 12px 40px;
-            font-size: 1.1rem;
+            padding: 12px 35px;
             font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 2px;
             cursor: pointer;
-            border-radius: 0px; /* Sharp edges for legend look */
-            transition: 0.5s;
-            position: relative;
-            overflow: hidden;
+            margin: 5px;
+            transition: 0.4s;
+            letter-spacing: 2px;
         }
-
         .tab-btn:hover, .tab-btn.active {
             background: var(--gold);
             color: black;
-            box-shadow: 0 0 20px var(--gold);
+            box-shadow: 0 0 15px var(--gold);
         }
 
         .container {
             max-width: 1300px;
-            margin: 50px auto;
+            margin: auto;
             padding: 20px;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-            min-height: 400px;
+            gap: 25px;
         }
 
         .card {
-            background: var(--glass);
+            background: rgba(255,255,255,0.03);
             border: 1px solid rgba(212,175,55,0.1);
-            position: relative;
             overflow: hidden;
             transition: 0.4s;
             backdrop-filter: blur(10px);
         }
-
-        .card:hover {
-            border: 1px solid var(--gold);
-            transform: translateY(-10px);
-        }
+        .card:hover { transform: translateY(-10px); border-color: var(--gold); }
 
         .card img, .card video, .card iframe {
             width: 100%;
             height: 300px;
             object-fit: cover;
             display: block;
+            /* ☠️ Quality Sharpness Filter */
+            filter: contrast(1.1) saturate(1.1);
         }
 
-        .label {
-            padding: 15px;
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            color: var(--gold);
-            background: rgba(0,0,0,0.8);
-            text-transform: uppercase;
-        }
+        .label { padding: 15px; font-size: 0.8rem; color: var(--gold); text-transform: uppercase; background: rgba(0,0,0,0.8); }
 
-        footer {
-            padding: 80px;
-            color: var(--gold);
-            letter-spacing: 5px;
-            font-size: 1.2rem;
-            border-top: 1px solid rgba(212,175,55,0.2);
-        }
-
-        /* Smooth load animation */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .card { animation: fadeIn 0.8s ease forwards; }
-
+        footer { padding: 60px; color: var(--gold); letter-spacing: 4px; border-top: 1px solid rgba(212,175,55,0.2); }
     </style>
 </head>
 <body>
 
 <header>
     <h1>JAGIRDAR</h1>
-<div class="tabs">
-    <button class="tab-btn" onclick="playSecretMusic(); showGallery('all')">ALL</button>
-    <button class="tab-btn" onclick="playSecretMusic(); showGallery('photo')">PHOTOS</button>
-    <button class="tab-btn" onclick="playSecretMusic(); showGallery('video')">VIDEOS</button>
-</div>
-
-<div id="secret-player" style="display:none;">
-    <iframe id="bg-track" width="0" height="0" 
-        src="https://www.youtube.com/embed/IgM1lAXppwI?enablejsapi=1&autoplay=1&mute=0&loop=1&playlist=IgM1lAXppwI" 
-        frameborder="0" allow="autoplay">
-    </iframe>
-</div>
+    <div class="tabs">
+        <button class="tab-btn" onclick="playSecretMusic(); showGallery('all')">ALL</button>
+        <button class="tab-btn" onclick="playSecretMusic(); showGallery('photo')">PHOTOS</button>
+        <button class="tab-btn" onclick="playSecretMusic(); showGallery('video')">VIDEOS</button>
+    </div>
 </header>
 
-<div class="container" id="main-gallery">
-    <div id="status" style="grid-column: 1/-1; color: #555; font-size: 1.5rem; letter-spacing: 3px;">
-        SELECT A CATEGORY TO UNLEASH MEMORIES
-    </div>
+<div style="display:none;">
+    <iframe id="bg-track" src="https://www.youtube.com/embed/IgM1lAXppwI?enablejsapi=1&loop=1&playlist=IgM1lAXppwI" allow="autoplay"></iframe>
 </div>
 
+<div class="container" id="main-gallery">
+    </div>
+
 <footer>
-    EST. 2026 | JAGIRDAR LEGACY
+    © 2026 JAGIRDAR | SAKHT LAUNDA LEGACY
 </footer>
+
 <script>
     const container = document.getElementById('main-gallery');
     const user = "jagirdar4898-hue";
     const repo = "Memories-";
     const folder = "gallery";
 
-    // 1. Music Play karne ka function
+    // 1. Smart Music Functions
     function playSecretMusic() {
-        var iframe = document.getElementById("bg-track");
-        if (iframe && iframe.src.indexOf("autoplay=1") === -1) {
-            iframe.src += "&autoplay=1";
-            console.log("☠️ Legacy Music Started...");
-        }
+        const iframe = document.getElementById("bg-track");
+        iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
     }
 
-    // 2. Gallery load aur filter karne ka function
-    async function showGallery(category) {
-        // Tab highlight logic
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        if(event && event.target) event.target.classList.add('active');
+    function pauseMusic() {
+        const iframe = document.getElementById("bg-track");
+        iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+    }
 
-        container.innerHTML = '<div style="grid-column: 1/-1; color: var(--gold); font-size: 20px;">☠️ LOADING LEGACY...</div>';
-        
+    function resumeMusic() {
+        const iframe = document.getElementById("bg-track");
+        iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+    }
+
+    // 2. Main Gallery Engine
+    async function showGallery(category) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        if(event && event.target.tagName === 'BUTTON') event.target.classList.add('active');
+
+        container.innerHTML = '<div style="grid-column: 1/-1; color: var(--gold);">☠️ LOADING LEGACY...</div>';
         let htmlContent = "";
 
         // Purani Photos (1-13)
@@ -179,41 +142,35 @@
             }
         }
 
-        // Purani Videos (14-17)
+        // Purani Videos (14-16)
         if(category === 'all' || category === 'video') {
-            htmlContent += `<div class="card"><video controls><source src="14.mp4"></video><div class="label">VIDEO 14</div></div>`;
-            htmlContent += `<div class="card"><video controls><source src="15.mp4"></video><div class="label">VIDEO 15</div></div>`;
-            htmlContent += `<div class="card"><video controls><source src="16.mp4"></video><div class="label">VIDEO 16</div></div>`;
-            htmlContent += `<div class="card"><iframe src="https://www.youtube.com/embed/IgM1lAXppwI" frameborder="0"></iframe><div class="label">VIDEO 17</div></div>`;
+            [14, 15, 16].forEach(v => {
+                htmlContent += `<div class="card"><video controls onplay="pauseMusic()" onpause="resumeMusic()"><source src="${v}.mp4"></video><div class="label">VIDEO ${v}</div></div>`;
+            });
         }
 
-        // Nayi Files (Gallery Folder)
+        // Gallery Folder Files
         try {
             const res = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${folder}`);
             const files = await res.json();
-            
             files.forEach(file => {
                 const name = file.name.toLowerCase();
-                if(name === 'index.txt' || name === 'placeholder.txt') return;
-
+                if(name === 'index.txt') return;
                 const isImg = name.endsWith('.jpg') || name.endsWith('.jpeg') || name.endsWith('.png');
                 const isVid = name.endsWith('.mp4') || name.endsWith('.mov');
 
                 if ((category === 'all') || (category === 'photo' && isImg) || (category === 'video' && isVid)) {
-                    let media = isImg ? `<img src="${file.download_url}" style="filter: contrast(1.1) brightness(1.05) saturate(1.1);">` : `<video controls playsinline><source src="${file.download_url}"></video>`;
+                    let media = isImg ? `<img src="${file.download_url}">` : `<video controls onplay="pauseMusic()" onpause="resumeMusic()"><source src="${file.download_url}"></video>`;
                     htmlContent += `<div class="card">${media}<div class="label">${file.name}</div></div>`;
                 }
             });
-        } catch (e) { console.log("Gallery Folder loading..."); }
+        } catch (e) { console.log("Upload files to gallery folder"); }
 
         container.innerHTML = htmlContent;
     }
 
-    // 3. Page load hote hi 'ALL' dikhao
-    window.onload = function() {
-        showGallery('all');
-    };
+    // Page Load Setup
+    window.onload = () => showGallery('all');
 </script>
-
 </body>
 </html>
