@@ -3,84 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JAGIRDAR | LEGENDARY GALLERY</title>
+    <title>JAGIRDAR LEGACY</title>
     <style>
-        :root {
-            --gold: #d4af37;
-            --premium-black: #050505;
-        }
-
-        body {
-            margin: 0;
-            background: var(--premium-black);
-            color: white;
-            font-family: 'Segoe UI', sans-serif;
-            text-align: center;
-            /* ☠️ Background Emoji Logic */
-            background-image: radial-gradient(circle, rgba(0,0,0,0.8) 0%, #050505 100%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 100 100'%3E%3Ctext y='50' font-size='30' opacity='0.1'%3E☠️%3C/text%3E%3C/svg%3E");
+        :root { --gold: #d4af37; --bg: #050505; }
+        body { 
+            margin: 0; background: var(--bg); color: white; font-family: sans-serif; text-align: center;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 100 100'%3E%3Ctext y='50' font-size='20' opacity='0.1'%3E☠️%3C/text%3E%3C/svg%3E");
             background-attachment: fixed;
         }
-
-        header { padding: 60px 20px; }
-        header h1 {
-            font-size: 3rem;
-            color: var(--gold);
-            letter-spacing: 10px;
-            text-transform: uppercase;
-            text-shadow: 0 0 20px rgba(212,175,55,0.5);
-            margin-bottom: 30px;
+        header { padding: 50px 20px; }
+        h1 { color: var(--gold); letter-spacing: 8px; text-transform: uppercase; font-size: 3rem; margin: 0; }
+        .tabs { margin: 30px 0; }
+        .tab-btn { 
+            background: transparent; border: 2px solid var(--gold); color: var(--gold); 
+            padding: 10px 30px; cursor: pointer; font-weight: bold; transition: 0.3s; margin: 5px;
         }
-
-        /* LEGENDARY BUTTONS */
-        .tabs { margin-bottom: 40px; }
-        .tab-btn {
-            background: transparent;
-            border: 2px solid var(--gold);
-            color: var(--gold);
-            padding: 12px 35px;
-            font-weight: bold;
-            text-transform: uppercase;
-            cursor: pointer;
-            margin: 5px;
-            transition: 0.4s;
-            letter-spacing: 2px;
+        .tab-btn.active, .tab-btn:hover { background: var(--gold); color: black; box-shadow: 0 0 15px var(--gold); }
+        .container { 
+            max-width: 1200px; margin: auto; padding: 20px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; 
         }
-        .tab-btn:hover, .tab-btn.active {
-            background: var(--gold);
-            color: black;
-            box-shadow: 0 0 15px var(--gold);
-        }
-
-        .container {
-            max-width: 1300px;
-            margin: auto;
-            padding: 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-        }
-
-        .card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(212,175,55,0.1);
-            overflow: hidden;
-            transition: 0.4s;
-            backdrop-filter: blur(10px);
-        }
+        .card { background: rgba(255,255,255,0.03); border: 1px solid rgba(212,175,55,0.2); transition: 0.4s; }
         .card:hover { transform: translateY(-10px); border-color: var(--gold); }
-
-        .card img, .card video, .card iframe {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            display: block;
-            /* ☠️ Quality Sharpness Filter */
-            filter: contrast(1.1) saturate(1.1);
-        }
-
-        .label { padding: 15px; font-size: 0.8rem; color: var(--gold); text-transform: uppercase; background: rgba(0,0,0,0.8); }
-
-        footer { padding: 60px; color: var(--gold); letter-spacing: 4px; border-top: 1px solid rgba(212,175,55,0.2); }
+        .card img, .card video { width: 100%; height: 300px; object-fit: cover; filter: contrast(1.1); }
+        .label { padding: 15px; color: var(--gold); font-size: 0.8rem; background: #000; text-transform: uppercase; }
+        footer { padding: 40px; color: var(--gold); border-top: 1px solid #222; margin-top: 50px; }
     </style>
 </head>
 <body>
@@ -88,22 +35,20 @@
 <header>
     <h1>JAGIRDAR</h1>
     <div class="tabs">
-        <button class="tab-btn" onclick="playSecretMusic(); showGallery('all')">ALL</button>
-        <button class="tab-btn" onclick="playSecretMusic(); showGallery('photo')">PHOTOS</button>
-        <button class="tab-btn" onclick="playSecretMusic(); showGallery('video')">VIDEOS</button>
+        <button class="tab-btn active" onclick="showGallery('all')">ALL</button>
+        <button class="tab-btn" onclick="showGallery('photo')">PHOTOS</button>
+        <button class="tab-btn" onclick="showGallery('video')">VIDEOS</button>
     </div>
 </header>
 
-<div style="display:none;">
-    <iframe id="bg-track" src="https://www.youtube.com/embed/IgM1lAXppwI?enablejsapi=1&loop=1&playlist=IgM1lAXppwI" allow="autoplay"></iframe>
-</div>
+<iframe id="bg-track" width="0" height="0" style="position:absolute; visibility:hidden;"
+    src="https://www.youtube.com/embed/IgM1lAXppwI?enablejsapi=1&autoplay=1&loop=1&playlist=IgM1lAXppwI&origin=https://jagirdar4898-hue.github.io" 
+    allow="autoplay">
+</iframe>
 
-<div class="container" id="main-gallery">
-    </div>
+<div class="container" id="main-gallery"></div>
 
-<footer>
-    © 2026 JAGIRDAR | SAKHT LAUNDA LEGACY
-</footer>
+<footer>© 2026 JAGIRDAR | SAKHT LAUNDA LEGACY</footer>
 
 <script>
     const container = document.getElementById('main-gallery');
@@ -111,65 +56,56 @@
     const repo = "Memories-";
     const folder = "gallery";
 
-    // 1. Smart Music Functions
-    function playSecretMusic() {
-        const iframe = document.getElementById("bg-track");
-        iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+    // YouTube Controller
+    function controlMusic(action) {
+        const iframe = document.getElementById('bg-track');
+        const command = action === 'pause' ? 'pauseVideo' : 'playVideo';
+        iframe.contentWindow.postMessage(JSON.stringify({"event":"command","func":command,"args":""}), '*');
     }
 
-    function pauseMusic() {
-        const iframe = document.getElementById("bg-track");
-        iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
-    }
-
-    function resumeMusic() {
-        const iframe = document.getElementById("bg-track");
-        iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-    }
-
-    // 2. Main Gallery Engine
     async function showGallery(category) {
+        // UI Update
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         if(event && event.target.tagName === 'BUTTON') event.target.classList.add('active');
+        
+        container.innerHTML = '<div style="grid-column:1/-1; color:var(--gold);">☠️ UNLEASHING...</div>';
+        let html = "";
 
-        container.innerHTML = '<div style="grid-column: 1/-1; color: var(--gold);">☠️ LOADING LEGACY...</div>';
-        let htmlContent = "";
-
-        // Purani Photos (1-13)
+        // 1. Fixed Photos (1-13)
         if(category === 'all' || category === 'photo') {
-            for (let i = 1; i <= 13; i++) {
-                htmlContent += `<div class="card"><img src="${i}.jpg" onerror="this.src='${i}.jpeg'"><div class="label">MEMORY ${i}</div></div>`;
+            for(let i=1; i<=13; i++) {
+                html += `<div class="card"><img src="${i}.jpg" onerror="this.src='${i}.jpeg'"><div class="label">MEMORY ${i}</div></div>`;
             }
         }
 
-        // Purani Videos (14-16)
+        // 2. Fixed Videos (14-16)
         if(category === 'all' || category === 'video') {
             [14, 15, 16].forEach(v => {
-                htmlContent += `<div class="card"><video controls onplay="pauseMusic()" onpause="resumeMusic()"><source src="${v}.mp4"></video><div class="label">VIDEO ${v}</div></div>`;
+                html += `<div class="card"><video controls onplay="controlMusic('pause')" onpause="controlMusic('play')"><source src="${v}.mp4"></video><div class="label">VIDEO ${v}</div></div>`;
             });
         }
 
-        // Gallery Folder Files
+        // 3. Dynamic Gallery Folder
         try {
             const res = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${folder}`);
             const files = await res.json();
             files.forEach(file => {
                 const name = file.name.toLowerCase();
-                if(name === 'index.txt') return;
-                const isImg = name.endsWith('.jpg') || name.endsWith('.jpeg') || name.endsWith('.png');
-                const isVid = name.endsWith('.mp4') || name.endsWith('.mov');
+                if(name.includes('index.txt')) return;
+                const isImg = /\.(jpg|jpeg|png|webp)$/i.test(name);
+                const isVid = /\.(mp4|mov|webm)$/i.test(name);
 
-                if ((category === 'all') || (category === 'photo' && isImg) || (category === 'video' && isVid)) {
-                    let media = isImg ? `<img src="${file.download_url}">` : `<video controls onplay="pauseMusic()" onpause="resumeMusic()"><source src="${file.download_url}"></video>`;
-                    htmlContent += `<div class="card">${media}<div class="label">${file.name}</div></div>`;
+                if(category === 'all' || (category === 'photo' && isImg) || (category === 'video' && isVid)) {
+                    let media = isImg ? `<img src="${file.download_url}">` : `<video controls onplay="controlMusic('pause')" onpause="controlMusic('play')"><source src="${file.download_url}"></video>`;
+                    html += `<div class="card">${media}<div class="label">${file.name}</div></div>`;
                 }
             });
-        } catch (e) { console.log("Upload files to gallery folder"); }
+        } catch(e) { console.log("Gallery Folder not found or empty"); }
 
-        container.innerHTML = htmlContent;
+        container.innerHTML = html;
     }
 
-    // Page Load Setup
+    // Start on load
     window.onload = () => showGallery('all');
 </script>
 </body>
