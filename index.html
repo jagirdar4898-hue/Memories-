@@ -147,31 +147,39 @@
 <footer>
     EST. 2026 | JAGIRDAR LEGACY
 </footer>
-
 <script>
     const container = document.getElementById('main-gallery');
     const user = "jagirdar4898-hue";
     const repo = "Memories-";
     const folder = "gallery";
 
+    // 1. Music Play karne ka function
+    function playSecretMusic() {
+        var iframe = document.getElementById("bg-track");
+        if (iframe && iframe.src.indexOf("autoplay=1") === -1) {
+            iframe.src += "&autoplay=1";
+            console.log("☠️ Legacy Music Started...");
+        }
+    }
+
+    // 2. Gallery load aur filter karne ka function
     async function showGallery(category) {
-        // Clear container and show loading
-        container.innerHTML = '<div style="grid-column: 1/-1; color: var(--gold);">LOADING LEGACY...</div>';
-        
         // Tab highlight logic
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        event.target.classList.add('active');
+        if(event && event.target) event.target.classList.add('active');
 
+        container.innerHTML = '<div style="grid-column: 1/-1; color: var(--gold); font-size: 20px;">☠️ LOADING LEGACY...</div>';
+        
         let htmlContent = "";
 
-        // 1. Purani 1-13 Photos (sirf tab jab 'all' ya 'photo' ho)
+        // Purani Photos (1-13)
         if(category === 'all' || category === 'photo') {
             for (let i = 1; i <= 13; i++) {
                 htmlContent += `<div class="card"><img src="${i}.jpg" onerror="this.src='${i}.jpeg'"><div class="label">MEMORY ${i}</div></div>`;
             }
         }
 
-        // 2. Purani Videos 14-17 (sirf tab jab 'all' ya 'video' ho)
+        // Purani Videos (14-17)
         if(category === 'all' || category === 'video') {
             htmlContent += `<div class="card"><video controls><source src="14.mp4"></video><div class="label">VIDEO 14</div></div>`;
             htmlContent += `<div class="card"><video controls><source src="15.mp4"></video><div class="label">VIDEO 15</div></div>`;
@@ -179,45 +187,32 @@
             htmlContent += `<div class="card"><iframe src="https://www.youtube.com/embed/IgM1lAXppwI" frameborder="0"></iframe><div class="label">VIDEO 17</div></div>`;
         }
 
-        // 3. Nayi Files 'gallery' folder se (Automatic filtering)
+        // Nayi Files (Gallery Folder)
         try {
             const res = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${folder}`);
             const files = await res.json();
             
             files.forEach(file => {
                 const name = file.name.toLowerCase();
-                if(name === 'index.txt') return;
+                if(name === 'index.txt' || name === 'placeholder.txt') return;
 
                 const isImg = name.endsWith('.jpg') || name.endsWith('.jpeg') || name.endsWith('.png');
                 const isVid = name.endsWith('.mp4') || name.endsWith('.mov');
 
                 if ((category === 'all') || (category === 'photo' && isImg) || (category === 'video' && isVid)) {
-                    let media = isImg ? `<img src="${file.download_url}">` : `<video controls playsinline><source src="${file.download_url}"></video>`;
+                    let media = isImg ? `<img src="${file.download_url}" style="filter: contrast(1.1) brightness(1.05) saturate(1.1);">` : `<video controls playsinline><source src="${file.download_url}"></video>`;
                     htmlContent += `<div class="card">${media}<div class="label">${file.name}</div></div>`;
                 }
             });
-        } catch (e) { console.log("Gallery folder loading..."); }
+        } catch (e) { console.log("Gallery Folder loading..."); }
 
         container.innerHTML = htmlContent;
     }
-    <script>
-    // Isse music start hoga
-    function playSecretMusic() {
-        var iframe = document.getElementById("bg-track");
-        var player = document.getElementById("secret-player");
-        
-        // Iframe ko reload karke play karna
-        if (iframe.src.indexOf("autoplay=1") === -1) {
-            iframe.src += "&autoplay=1";
-        }
-        console.log("☠️ Legacy Music Started...");
-    }
 
-    // Baaki aapka purana showGallery function...
-    async function showGallery(category) {
-        // ... (pichle code jaisa hi)
-    }
-</script>
+    // 3. Page load hote hi 'ALL' dikhao
+    window.onload = function() {
+        showGallery('all');
+    };
 </script>
 
 </body>
