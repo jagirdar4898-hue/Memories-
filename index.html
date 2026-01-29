@@ -47,17 +47,17 @@
                 </div>`;
         }
 
-        // 14 se 16 tak Videos (.mp4)
-        for (let i = 14; i <= 16; i++) {
-            gallery.innerHTML += `
-                <div class="card">
-                    <video controls>
-                        <source src="${i}.mp4" type="video/mp4">
-                        Browser support nahi karta.
-                    </video>
-                    <div class="label">Video ${i}</div>
-                </div>`;
-        }
+        // Videos wala loop (14 se 16)
+for (let i = 14; i <= 16; i++) {
+    gallery.innerHTML += `
+        <div class="card">
+            <video controls preload="auto" playsinline>
+                <source src="${i}.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="label">Video ${i}</div>
+        </div>`;
+}
     </script>
 </body>
 </html>
