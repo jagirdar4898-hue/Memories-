@@ -4,226 +4,220 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <meta name="google-site-verification" content="GSC_CODE_HERE" />
-    <title>PAWAN | Class 12 Arts Jain School Memories 2025-26</title>
-    <meta name="description" content="Official memories of Pawan and friends from Class 12 Arts, Jain School (2025-26).">
-    <meta name="keywords" content="Pawan Jain School, Class 12 Arts, Jagirdar Memories">
+    <title>JAGIRDAR | LEGENDARY GALLERY | Class 12 Arts 2025-26</title>
+    <meta name="description" content="Official memories of Jagirdar and friends from Class 12 Arts, Jain School (2025-26). Exploring the Sakht Launda Legacy through photos and videos.">
+    <meta name="keywords" content="Jagirdar, Jagirdar Memories, Jain School Class 12 Arts, Pawan Jagirdar, Sakht Launda Legacy, School Memories 2026">
+    <meta name="author" content="Jagirdar">
 
     <style>
         :root {
             --gold: #d4af37;
-            --silver: #c0c0c0;
-            --bg: #1a1a1a;
+            --premium-black: #050505;
         }
 
         body {
             margin: 0;
-            padding: 0;
-            background-color: #b8860b; 
-            background-image: radial-gradient(circle, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 100%), 
-                              url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 100 100'%3E%3Ctext y='50' font-size='30' opacity='0.2'%3E☠️%3C/text%3E%3C/svg%3E");
-            background-attachment: fixed;
+            background: var(--premium-black);
             color: white;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             text-align: center;
+            background-image: radial-gradient(circle, rgba(0,0,0,0.8) 0%, #050505 100%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 100 100'%3E%3Ctext y='50' font-size='30' opacity='0.1'%3E☠️%3C/text%3E%3C/svg%3E");
+            background-attachment: fixed;
         }
 
-        header {
-            padding: 40px 20px;
-            background: rgba(0,0,0,0.4);
-            border-bottom: 3px solid var(--silver);
-            margin-bottom: 30px;
-        }
-
-        h1 {
-            color: var(--silver);
-            font-size: 3rem;
-            text-shadow: 4px 4px 8px black;
+        header { padding: 60px 20px; }
+        header h1 {
+            font-size: 3.5rem;
+            color: var(--gold);
+            letter-spacing: 12px;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(212,175,55,0.5);
             margin: 0;
         }
 
+        /* TABS STYLE */
+        .tabs { margin: 40px 0; }
+        .tab-btn {
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            padding: 12px 35px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin: 8px;
+            transition: 0.4s;
+            letter-spacing: 2px;
+            border-radius: 0;
+        }
+        .tab-btn:hover, .tab-btn.active {
+            background: var(--gold);
+            color: black;
+            box-shadow: 0 0 15px var(--gold);
+        }
+
         .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            padding: 20px;
             max-width: 1400px;
-            margin: 0 auto;
+            margin: auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
         }
 
         .card {
-            background: rgba(0, 0, 0, 0.8);
-            border: 2px solid var(--silver);
-            border-radius: 15px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(212,175,55,0.1);
             overflow: hidden;
-            height: 380px; 
-            display: flex;
-            flex-direction: column;
-            transition: all 0.4s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
         }
-
-        .card:hover {
-            transform: translateY(-10px) scale(1.02);
+        .card:hover { 
+            transform: translateY(-10px) scale(1.02); 
             border-color: var(--gold);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.6);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
 
         .card img, .card video {
             width: 100%;
-            height: 82%;
+            height: 350px; /* Fixed height for consistency */
             object-fit: cover;
-            border-bottom: 2px solid var(--silver);
+            display: block;
+            filter: contrast(1.1) saturate(1.1);
         }
 
-        .label {
-            height: 18%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #000;
-            color: var(--gold);
-            font-weight: bold;
-            font-size: 1.1rem;
-            text-transform: uppercase;
+        .label { 
+            padding: 15px; 
+            font-size: 0.85rem; 
+            color: var(--gold); 
+            text-transform: uppercase; 
+            background: rgba(0,0,0,0.9);
+            border-top: 1px solid rgba(212,175,55,0.2);
         }
 
-        footer {
+        footer { 
+            padding: 80px 20px; 
+            color: var(--gold); 
+            letter-spacing: 5px; 
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(212,175,55,0.2);
             margin-top: 50px;
-            padding: 40px;
-            background: rgba(0,0,0,0.5);
-            color: var(--silver);
-            border-top: 2px solid var(--gold);
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>☠️ JAIN SCHOOL MEMORIES ☠️</h1>
-    <p style="font-size: 1.2rem; color: var(--silver);">Class 12 Arts | Batch 2025-26 | Pawan Jagirdar</p>
+    <h1>JAGIRDAR</h1>
+    <p style="color: var(--gold); letter-spacing: 2px; margin-top: 10px;">LEGACY OF 2025-26</p>
+    <div class="tabs">
+        <button class="tab-btn active" onclick="playSecretMusic(); showGallery('all')">ALL</button>
+        <button class="tab-btn" onclick="playSecretMusic(); showGallery('photo')">PHOTOS</button>
+        <button class="tab-btn" onclick="playSecretMusic(); showGallery('video')">VIDEOS</button>
+    </div>
 </header>
 
-<div class="container">
-    <div class="card">
-        <img src="1.jpg" alt="Memory 1">
-        <div class="label">Memory 1</div>
+<div style="display:none;">
+    <iframe id="bg-track" src="https://www.youtube.com/embed/IgM1lAXppwI?enablejsapi=1&loop=1&playlist=IgM1lAXppwI" allow="autoplay"></iframe>
+</div>
+
+<div class="container" id="main-gallery">
     </div>
 
-    <div class="card">
-        <img src="2.jpg" alt="Memory 2">
-        <div class="label">Memory 2</div>
-    </div>
-
-    <div class="card">
-        <img src="3.jpg" alt="Memory 3">
-        <div class="label">Memory 3</div>
-    </div>
-
-    <div class="card">
-        <img src="4.jpg" alt="Memory 4">
-        <div class="label">Memory 4</div>
-    </div>
-
-    <div class="card">
-        <img src="5.jpg" alt="Memory 5">
-        <div class="label">Memory 5</div>
-    </div>
-
-    <div class="card">
-        <img src="6.jpg" alt="Memory 6">
-        <div class="label">Memory 6</div>
-    </div>
-
-    <div class="card">
-        <img src="7.jpg" alt="Memory 7">
-        <div class="label">Memory 7</div>
-    </div>
-
-    <div class="card">
-        <img src="8.jpg" alt="Memory 8">
-        <div class="label">Memory 8</div>
-    </div>
-
-    <div class="card">
-        <img src="9.jpg" alt="Memory 9">
-        <div class="label">Memory 9</div>
-    </div>
-
-    <div class="card">
-        <img src="10.jpg" alt="Memory 10">
-        <div class="label">Memory 10</div>
-    </div>
-
-    <div class="card"><img src="11.jpg"><div class="label">Memory 11</div></div>
-    <div class="card"><img src="12.jpg"><div class="label">Memory 12</div></div>
-    <div class="card"><img src="13.jpg"><div class="label">Memory 13</div></div>
-    <div class="card"><img src="14.jpg"><div class="label">Memory 14</div></div>
-    <div class="card"><img src="15.jpg"><div class="label">Memory 15</div></div>
-    <div class="card"><img src="16.jpg"><div class="label">Memory 16</div></div>
-    <div class="card"><img src="17.jpg"><div class="label">Memory 17</div></div>
-    <div class="card"><img src="18.jpg"><div class="label">Memory 18</div></div>
-    <div class="card"><img src="19.jpg"><div class="label">Memory 19</div></div>
-    <div class="card"><img src="20.jpg"><div class="label">Memory 20</div></div>
-
-    <div class="card"><img src="21.jpg"><div class="label">Memory 21</div></div>
-    <div class="card"><img src="22.jpg"><div class="label">Memory 22</div></div>
-    <div class="card"><img src="23.jpg"><div class="label">Memory 23</div></div>
-    <div class="card"><img src="24.jpg"><div class="label">Memory 24</div></div>
-    <div class="card"><img src="25.jpg"><div class="label">Memory 25</div></div>
-    <div class="card"><img src="26.jpg"><div class="label">Memory 26</div></div>
-    <div class="card"><img src="27.jpg"><div class="label">Memory 27</div></div>
-    <div class="card"><img src="28.jpg"><div class="label">Memory 28</div></div>
-    <div class="card"><img src="29.jpg"><div class="label">Memory 29</div></div>
-    <div class="card"><img src="30.jpg"><div class="label">Memory 30</div></div>
-    <div class="card"><img src="31.jpg"><div class="label">Memory 31</div></div>
-    <div class="card"><img src="32.jpg"><div class="label">Memory 32</div></div>
-    <div class="card"><img src="33.jpg"><div class="label">Memory 33</div></div>
-    <div class="card"><img src="34.jpg"><div class="label">Memory 34</div></div>
-    <div class="card"><img src="35.jpg"><div class="label">Memory 35</div></div>
-
-    <div class="card"><img src="36.jpg"><div class="label">Memory 36</div></div>
-    <div class="card"><img src="37.jpg"><div class="label">Memory 37</div></div>
-    <div class="card"><img src="38.jpg"><div class="label">Memory 38</div></div>
-    <div class="card"><img src="39.jpg"><div class="label">Memory 39</div></div>
-    <div class="card"><img src="40.jpg"><div class="label">Memory 40</div></div>
-    <div class="card"><img src="41.jpg"><div class="label">Memory 41</div></div>
-    <div class="card"><img src="42.jpg"><div class="label">Memory 42</div></div>
-    <div class="card"><img src="43.jpg"><div class="label">Memory 43</div></div>
-    <div class="card"><img src="44.jpg"><div class="label">Memory 44</div></div>
-    <div class="card"><img src="45.jpg"><div class="label">Memory 45</div></div>
-    <div class="card"><img src="46.jpg"><div class="label">Memory 46</div></div>
-    <div class="card"><img src="47.jpg"><div class="label">Memory 47</div></div>
-    <div class="card"><img src="48.jpg"><div class="label">Memory 48</div></div>
-    <div class="card"><img src="49.jpg"><div class="label">Memory 49</div></div>
-    <div class="card"><img src="50.jpg"><div class="label">Memory 50</div></div>
-
-    <div class="card"><img src="51.jpg"><div class="label">Memory 51</div></div>
-    <div class="card"><img src="52.jpg"><div class="label">Memory 52</div></div>
-    <div class="card"><img src="53.jpg"><div class="label">Memory 53</div></div>
-    <div class="card"><img src="54.jpg"><div class="label">Memory 54</div></div>
-    <div class="card"><img src="55.jpg"><div class="label">Memory 55</div></div>
-    <div class="card"><img src="56.jpg"><div class="label">Memory 56</div></div>
-    <div class="card"><img src="57.jpg"><div class="label">Memory 57</div></div>
-    <div class="card"><img src="58.jpg"><div class="label">Memory 58</div></div>
-    <div class="card"><img src="59.jpg"><div class="label">Memory 59</div></div>
-    <div class="card"><img src="60.jpg"><div class="label">Memory 60</div></div>
-    <div class="card"><img src="61.jpg"><div class="label">Memory 61</div></div>
-    <div class="card"><img src="62.jpg"><div class="label">Memory 62</div></div>
-    <div class="card"><img src="63.jpg"><div class="label">Memory 63</div></div>
-    <div class="card"><img src="64.jpg"><div class="label">Memory 64</div></div>
-    <div class="card"><img src="65.jpg"><div class="label">Memory 65</div></div>
-
-    <div class="card"><img src="66.jpg"><div class="label">Memory 66</div></div>
-    <div class="card"><img src="67.jpg"><div class="label">Memory 67</div></div>
-    <div class="card"><video src="video1.mp4" controls></video><div class="label">Memory 68 (Video)</div></div>
-    <div class="card"><video src="video2.mp4" controls></video><div class="label">Memory 69 (Video)</div></div>
-    <div class="card"><img src="70.jpg"><div class="label">Memory 70</div></div>
-
-</div> <footer>
-    <p>Handcrafted for the Batch of 2025-26</p>
-    <p style="color: var(--gold); font-weight: bold;">PAWAN JAGIRDAR ☠️</p>
+<footer>
+    © 2026 JAGIRDAR PAWAN | ☠️ LEGACY ☠️
 </footer>
 
+<script>
+    const container = document.getElementById('main-gallery');
+    const user = "jagirdar4898-hue";
+    const repo = "Memories-";
+    const folder = "gallery";
+
+    function playSecretMusic() {
+        const iframe = document.getElementById("bg-track");
+        iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+    }
+
+    function pauseMusic() {
+        const iframe = document.getElementById("bg-track");
+        iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+    }
+
+    function resumeMusic() {
+        const iframe = document.getElementById("bg-track");
+        iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+    }
+
+    async function showGallery(category) {
+        // Handle Active Button UI
+        if(event && event.target.tagName === 'BUTTON') {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        container.innerHTML = '<div style="grid-column: 1/-1; color: var(--gold); font-size: 1.5rem;">☠️ LOADING THE LEGACY...</div>';
+        let htmlContent = "";
+
+        // 1. Load Hardcoded Photos (1-13)
+        if(category === 'all' || category === 'photo') {
+            for (let i = 1; i <= 13; i++) {
+                htmlContent += `
+                <div class="card">
+                    <img src="${i}.jpg" onerror="this.src='${i}.jpeg'" loading="lazy">
+                    <div class="label">MEMORY ${i}</div>
+                </div>`;
+            }
+        }
+
+        // 2. Load Hardcoded Videos (14-16)
+        if(category === 'all' || category === 'video') {
+            [14, 15, 16].forEach(v => {
+                htmlContent += `
+                <div class="card">
+                    <video controls onplay="pauseMusic()" onpause="resumeMusic()">
+                        <source src="${v}.mp4" type="video/mp4">
+                    </video>
+                    <div class="label">LEGACY VIDEO ${v}</div>
+                </div>`;
+            });
+        }
+
+        // 3. Auto-Load Everything from 'gallery' folder via GitHub API
+        try {
+            const res = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${folder}`);
+            const files = await res.json();
+            
+            if(Array.isArray(files)) {
+                files.forEach(file => {
+                    const name = file.name.toLowerCase();
+                    if(name === 'index.txt' || name === '.ds_store') return;
+
+                    const isImg = name.endsWith('.jpg') || name.endsWith('.jpeg') || name.endsWith('.png') || name.endsWith('.webp');
+                    const isVid = name.endsWith('.mp4') || name.endsWith('.mov') || name.endsWith('.webm');
+
+                    if ((category === 'all') || (category === 'photo' && isImg) || (category === 'video' && isVid)) {
+                        let media = isImg 
+                            ? `<img src="${file.download_url}" loading="lazy">` 
+                            : `<video controls onplay="pauseMusic()" onpause="resumeMusic()"><source src="${file.download_url}"></video>`;
+                        
+                        htmlContent += `
+                        <div class="card">
+                            ${media}
+                            <div class="label">${file.name}</div>
+                        </div>`;
+                    }
+                });
+            }
+        } catch (e) { 
+            console.log("Gallery folder sync issues or no files found."); 
+        }
+
+        container.innerHTML = htmlContent;
+    }
+
+    // Initialize
+    window.onload = () => showGallery('all');
+</script>
 </body>
     </html>
