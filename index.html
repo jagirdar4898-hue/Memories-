@@ -124,8 +124,8 @@
 </div>
 
 <div class="container" id="main-gallery">
-    <div id="chat-area" class="chat-container" style="display: none; max-width: 900px; margin: 40px auto; border: 2px solid #d4af37; border-radius: 15px; overflow: hidden;">
-    <h2 style="color: #d4af37; letter-spacing: 5px; padding: 20px 0;">☠️ LEGACY CHAT ☠️</h2>
+    <div id="chat-area" class="chat-container" style="display: none; margin: 20px auto; max-width: 900px;">
+    <h2 style="color: var(--gold); letter-spacing: 5px;">☠️ LEGACY CHAT ☠️</h2>
     <iframe src="https://deadsimplechat.com/VcwE7MpUc" width="100%" height="600px" frameborder="0"></iframe>
     </div>
     </div>
@@ -135,9 +135,7 @@
 </footer>
 
 <script>
-    ;
-    const container = document.getElementById('main-gallery');
-    const chatArea = document.getElementById('chat-area');
+const container = document.getElementById('main-gallery');
     const user = "jagirdar4898-hue";
     const repo = "Memories-";
     const folder = "gallery";
@@ -145,48 +143,50 @@
     // 1. Music Logic
     function playSecretMusic() {
         const iframe = document.getElementById("bg-track");
-        iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+        if(iframe) iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
     }
-
     function pauseMusic() {
         const iframe = document.getElementById("bg-track");
-        iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+        if(iframe) iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
     }
-
     function resumeMusic() {
         const iframe = document.getElementById("bg-track");
-        iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+        if(iframe) iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
     }
 
-    // 2. Chat Function: Gallery ko chhupa kar Chat dikhayega
+    // 2. Chat Function (Har haal mein chalne wala)
     function showChat(e) {
-        // Button highlight change karna
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        e.target.classList.add('active');
+        if(e) e.preventDefault(); // Page refresh hone se rokne ke liye
 
-        // Toggle Views
-        container.style.display = 'none';
-        chatArea.style.display = 'block';
+        // Button Active Style
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        if(e && e.target) e.target.classList.add('active');
+
+        // Toggle: Gallery OFF, Chat ON
+        document.getElementById('main-gallery').style.setProperty('display', 'none', 'important');
+        document.getElementById('chat-area').style.setProperty('display', 'block', 'important');
         
-        playSecretMusic(); // Chat karte waqt music chalta rahe
+        console.log("☠️ Legacy Chat Loaded");
+        playSecretMusic();
     }
 
-    // 3. Gallery Function: Chat ko chhupa kar Photos/Videos dikhayega
+    // 3. Gallery Function
     async function showGallery(category) {
-        // UI Updates
-        if(event && event.target.tagName === 'BUTTON') {
+        // Button Active Style
+        if(window.event && window.event.target.tagName === 'BUTTON') {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
+            window.event.target.classList.add('active');
         }
 
-        // Toggle Views: Gallery dikhao, Chat chhupao
-        container.style.display = 'grid';
-        chatArea.style.display = 'none';
+        // Toggle: Gallery ON, Chat OFF
+        document.getElementById('main-gallery').style.display = 'grid';
+        document.getElementById('chat-area').style.display = 'none';
 
-        container.innerHTML = '<div style="grid-column: 1/-1; color: var(--gold); font-size: 1.5rem; padding: 50px;">☠️ LOADING THE LEGACY...</div>';
+        container.innerHTML = '<div style="grid-column: 1/-1; color: var(--gold); font-size: 1.5rem; padding:50px;">☠️ LOADING THE LEGACY...</div>';
+        
         let htmlContent = "";
 
-        // HARDCODED FILES (1 se 16 tak)
+        // HARDCODED MEMORIES (1-16)
         if(category === 'all' || category === 'photo') {
             for (let i = 1; i <= 13; i++) {
                 htmlContent += `<div class="card"><img src="${i}.jpg" onerror="this.src='${i}.jpeg'" loading="lazy"><div class="label">MEMORY ${i}</div></div>`;
@@ -198,37 +198,28 @@
             });
         }
 
-        // DYNAMIC FILES (Gallery folder se - Reverse Order mein)
+        // DYNAMIC GITHUB SYNC
         try {
             const res = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${folder}`);
             let files = await res.json();
-            
-            // ☠️ REVERSE LOGIC: Nayi uploads upar aayengi
             files.reverse(); 
 
-            if(Array.isArray(files)) {
-                files.forEach(file => {
-                    const name = file.name.toLowerCase();
-                    if(name === 'index.txt' || name === '.ds_store') return;
+            files.forEach(file => {
+                const name = file.name.toLowerCase();
+                if(name === 'index.txt' || name === '.ds_store') return;
+                const isImg = name.endsWith('.jpg') || name.endsWith('.jpeg') || name.endsWith('.png') || name.endsWith('.webp');
+                const isVid = name.endsWith('.mp4') || name.endsWith('.mov');
 
-                    const isImg = name.endsWith('.jpg') || name.endsWith('.jpeg') || name.endsWith('.png') || name.endsWith('.webp');
-                    const isVid = name.endsWith('.mp4') || name.endsWith('.mov') || name.endsWith('.webm');
-
-                    if ((category === 'all') || (category === 'photo' && isImg) || (category === 'video' && isVid)) {
-                        let media = isImg 
-                            ? `<img src="${file.download_url}" loading="lazy">` 
-                            : `<video controls onplay="pauseMusic()" onpause="resumeMusic()"><source src="${file.download_url}"></video>`;
-                        
-                        htmlContent += `<div class="card">${media}<div class="label">${file.name}</div></div>`;
-                    }
-                });
-            }
-        } catch (e) { console.log("GitHub Sync Error"); }
+                if ((category === 'all') || (category === 'photo' && isImg) || (category === 'video' && isVid)) {
+                    let media = isImg ? `<img src="${file.download_url}" loading="lazy">` : `<video controls onplay="pauseMusic()" onpause="resumeMusic()"><source src="${file.download_url}"></video>`;
+                    htmlContent += `<div class="card">${media}<div class="label">${file.name}</div></div>`;
+                }
+            });
+        } catch (e) { console.log("GitHub sync wait..."); }
 
         container.innerHTML = htmlContent;
     }
 
-    // Site khulte hi gallery load ho
     window.onload = () => showGallery('all');
 </script>
 </body>
