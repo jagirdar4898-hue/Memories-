@@ -124,8 +124,8 @@
 </div>
 
 <div class="container" id="main-gallery">
-    <div id="chat-area" class="chat-container" style="display: none; margin: 20px auto; max-width: 900px;">
-    <h2 style="color: var(--gold); letter-spacing: 5px;">☠️ LEGACY CHAT ☠️</h2>
+<div id="chat-area" style="display: none; width: 100%; text-align: center;">
+    <h2 style="color: #d4af37;">☠️ LEGACY CHAT ☠️</h2>
     <iframe src="https://deadsimplechat.com/VcwE7MpUc" width="100%" height="600px" frameborder="0"></iframe>
     </div>
     </div>
@@ -219,6 +219,12 @@ const container = document.getElementById('main-gallery');
 
         container.innerHTML = htmlContent;
     }
+    // Force click binding
+document.addEventListener('click', function(e) {
+    if(e.target && e.target.innerText === '✉️') {
+        showChat(e);
+    }
+});
 
     window.onload = () => showGallery('all');
 </script>
