@@ -11,18 +11,74 @@
     
     <meta property="og:title" content="JAGIRDAR LEGACY | Jain School 2025-26">
     <meta property="og:description" content="Class 12 Arts Friends Group Photos & Best Moments.">
-    <meta property="og:image" content="1.jpg"> <style>
-        /* ... Baaki tumhara pura style wala code yahan rahega ... */
-        :root { --gold: #d4af37; --silver: #c0c0c0; --bg: #b8860b; }
-        body { 
-            margin: 0; background: var(--bg); color: white; font-family: sans-serif; text-align: center;
-            /* ☠️ Bright Emoji Background */
-            background-image: radial-gradient(circle, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.1) 100%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 100 100'%3E%3Ctext y='50' font-size='40' opacity='0.5'%3E☠️%3C/text%3E%3C/svg%3E");
-            background-attachment: fixed;
-        }
-        h1, .label, footer { color: var(--silver) !important; text-shadow: 2px 2px 5px black; }
-        /* ... Baaki code same rakhein ... */
-    </style>
+    <meta property="og:image" content="1.jpg"> 
+    <style>
+    :root {
+        --gold: #d4af37;
+        --silver: #c0c0c0;
+        --bg: #1a1a1a; /* Dark background taaki golden/silver chamke */
+    }
+
+    body {
+        margin: 0;
+        background-color: #b8860b; /* Golden background jo tumne manga tha */
+        background-image: radial-gradient(circle, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 100%), 
+                          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 100 100'%3E%3Ctext y='50' font-size='40' opacity='0.6'%3E☠️%3C/text%3E%3C/svg%3E");
+        background-attachment: fixed;
+        color: white;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Photos/Videos ko set karne wala main box */
+    .container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Automatic columns */
+        gap: 20px;
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Har photo aur video ka outer box */
+    .card {
+        background: rgba(0, 0, 0, 0.6);
+        border: 2px solid var(--silver);
+        border-radius: 12px;
+        overflow: hidden;
+        height: 300px; /* Sabka size ek jaisa */
+        display: flex;
+        flex-direction: column;
+        transition: 0.3s;
+    }
+
+    .card:hover {
+        transform: translateY(-10px);
+        border-color: var(--gold);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    }
+
+    /* Photo aur Video ko fit karne wali setting */
+    .card img, .card video {
+        width: 100%;
+        height: 85%;
+        object-fit: cover; /* Isse photo kategi nahi, box mein fit ho jayegi */
+        border-bottom: 1px solid var(--silver);
+    }
+
+    /* Label (Memory text) ka style */
+    .label {
+        height: 15%;
+        color: var(--silver) !important;
+        font-size: 14px;
+        letter-spacing: 1px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: black;
+    }
+
+    h1 { color: var(--silver) !important; text-shadow: 2px 2px 4px black; }
+            </style>
 </head>
 <body>
 
@@ -40,9 +96,17 @@
     allow="autoplay">
 </iframe>
 
-<div class="container" id="main-gallery"></div>
+<div class="card">
+    <img src="1.jpg">
+    <div class="label">MEMORY 1</div>
+</div>
 
-<footer>© 2026 JAGIRDAR | SAKHT LAUNDA LEGACY</footer>
+<div class="card">
+    <video src="video.mp4" controls></video>
+    <div class="label">VIDEO 1</div>
+</div>
+
+<footer>© 2026 JAGIRDAR PAWAN |  GR8 </footer>
 
 <script>
     const container = document.getElementById('main-gallery');
