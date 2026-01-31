@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <meta name="google-site-verification" content="YAHAN_APNA_CODE_DALO" />
-    
+    <meta name="google-site-verification" content="GSC_CODE_HERE" />
     <title>PAWAN | Class 12 Arts Jain School Memories 2025-26</title>
-    <meta name="description" content="Official memories of Pawan and friends from Class 12 Arts, Jain School (2025-26). Check out our school gallery.">
-    <meta name="keywords" content="Pawan Jain School, Class 12 Arts Jain School, Jagirdar Memories, Jain School 2025-26">
+    <meta name="description" content="Official memories of Pawan and friends from Class 12 Arts, Jain School (2025-26).">
+    <meta name="keywords" content="Pawan Jain School, Class 12 Arts, Jagirdar Memories">
 
     <style>
         :root {
@@ -19,97 +18,212 @@
 
         body {
             margin: 0;
-            background-color: #b8860b; /* Golden background */
-            background-image: radial-gradient(circle, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 100%), 
-                              url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 100 100'%3E%3Ctext y='50' font-size='40' opacity='0.3'%3E☠️%3C/text%3E%3C/svg%3E");
+            padding: 0;
+            background-color: #b8860b; 
+            background-image: radial-gradient(circle, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.3) 100%), 
+                              url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 100 100'%3E%3Ctext y='50' font-size='30' opacity='0.2'%3E☠️%3C/text%3E%3C/svg%3E");
             background-attachment: fixed;
             color: white;
-            font-family: 'Segoe UI', Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             text-align: center;
+        }
+
+        header {
+            padding: 40px 20px;
+            background: rgba(0,0,0,0.4);
+            border-bottom: 3px solid var(--silver);
+            margin-bottom: 30px;
         }
 
         h1 {
             color: var(--silver);
-            text-shadow: 3px 3px 6px black;
-            padding: 20px;
-            font-size: 2.5rem;
+            font-size: 3rem;
+            text-shadow: 4px 4px 8px black;
+            margin: 0;
         }
 
-        /* Sabse Main: Photos/Videos ko barabar size mein rakhne wala box */
         .container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            gap: 25px;
             padding: 20px;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
-        /* Har photo/video ka box */
         .card {
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.8);
             border: 2px solid var(--silver);
             border-radius: 15px;
             overflow: hidden;
-            height: 350px; /* Sabka size fix */
+            height: 380px; 
             display: flex;
             flex-direction: column;
-            transition: transform 0.3s, border-color 0.3s;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
         .card:hover {
-            transform: scale(1.03);
+            transform: translateY(-10px) scale(1.02);
             border-color: var(--gold);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.6);
         }
 
-        /* Image aur Video ki setting */
         .card img, .card video {
             width: 100%;
-            height: 85%; /* 85% area media ka */
-            object-fit: cover; /* Isse photo/video box mein fit ho jayegi bina khrab dikhe */
+            height: 82%;
+            object-fit: cover;
+            border-bottom: 2px solid var(--silver);
         }
 
-        /* Niche ka text label */
         .label {
-            height: 15%;
+            height: 18%;
             display: flex;
             align-items: center;
             justify-content: center;
             background: #000;
-            color: var(--silver);
+            color: var(--gold);
             font-weight: bold;
-            font-size: 14px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+        }
+
+        footer {
+            margin-top: 50px;
+            padding: 40px;
+            background: rgba(0,0,0,0.5);
+            color: var(--silver);
+            border-top: 2px solid var(--gold);
         }
     </style>
 </head>
 <body>
 
+<header>
     <h1>☠️ JAIN SCHOOL MEMORIES ☠️</h1>
-    <p>Class 12 Arts | Batch 2025-26</p>
+    <p style="font-size: 1.2rem; color: var(--silver);">Class 12 Arts | Batch 2025-26 | Pawan Jagirdar</p>
+</header>
 
-    <div class="container">
+<div class="container">
+    <div class="card">
+        <img src="1.jpg" alt="Memory 1">
+        <div class="label">Memory 1</div>
+    </div>
 
-        <div class="card">
-            <img src="1.jpg" alt="Memory 1">
-            <div class="label">MEMORY 1</div>
-        </div>
+    <div class="card">
+        <img src="2.jpg" alt="Memory 2">
+        <div class="label">Memory 2</div>
+    </div>
 
-        <div class="card">
-            <img src="2.jpg" alt="Memory 2">
-            <div class="label">MEMORY 2</div>
-        </div>
+    <div class="card">
+        <img src="3.jpg" alt="Memory 3">
+        <div class="label">Memory 3</div>
+    </div>
 
-        <div class="card">
-            <video src="video1.mp4" controls></video>
-            <div class="label">CLASS MASTI</div>
-        </div>
+    <div class="card">
+        <img src="4.jpg" alt="Memory 4">
+        <div class="label">Memory 4</div>
+    </div>
 
-        </div>
+    <div class="card">
+        <img src="5.jpg" alt="Memory 5">
+        <div class="label">Memory 5</div>
+    </div>
 
-    <footer style="padding: 50px; color: var(--gold);">
-        <p>Created by Pawan | 2026</p>
-    </footer>
+    <div class="card">
+        <img src="6.jpg" alt="Memory 6">
+        <div class="label">Memory 6</div>
+    </div>
+
+    <div class="card">
+        <img src="7.jpg" alt="Memory 7">
+        <div class="label">Memory 7</div>
+    </div>
+
+    <div class="card">
+        <img src="8.jpg" alt="Memory 8">
+        <div class="label">Memory 8</div>
+    </div>
+
+    <div class="card">
+        <img src="9.jpg" alt="Memory 9">
+        <div class="label">Memory 9</div>
+    </div>
+
+    <div class="card">
+        <img src="10.jpg" alt="Memory 10">
+        <div class="label">Memory 10</div>
+    </div>
+
+    <div class="card"><img src="11.jpg"><div class="label">Memory 11</div></div>
+    <div class="card"><img src="12.jpg"><div class="label">Memory 12</div></div>
+    <div class="card"><img src="13.jpg"><div class="label">Memory 13</div></div>
+    <div class="card"><img src="14.jpg"><div class="label">Memory 14</div></div>
+    <div class="card"><img src="15.jpg"><div class="label">Memory 15</div></div>
+    <div class="card"><img src="16.jpg"><div class="label">Memory 16</div></div>
+    <div class="card"><img src="17.jpg"><div class="label">Memory 17</div></div>
+    <div class="card"><img src="18.jpg"><div class="label">Memory 18</div></div>
+    <div class="card"><img src="19.jpg"><div class="label">Memory 19</div></div>
+    <div class="card"><img src="20.jpg"><div class="label">Memory 20</div></div>
+
+    <div class="card"><img src="21.jpg"><div class="label">Memory 21</div></div>
+    <div class="card"><img src="22.jpg"><div class="label">Memory 22</div></div>
+    <div class="card"><img src="23.jpg"><div class="label">Memory 23</div></div>
+    <div class="card"><img src="24.jpg"><div class="label">Memory 24</div></div>
+    <div class="card"><img src="25.jpg"><div class="label">Memory 25</div></div>
+    <div class="card"><img src="26.jpg"><div class="label">Memory 26</div></div>
+    <div class="card"><img src="27.jpg"><div class="label">Memory 27</div></div>
+    <div class="card"><img src="28.jpg"><div class="label">Memory 28</div></div>
+    <div class="card"><img src="29.jpg"><div class="label">Memory 29</div></div>
+    <div class="card"><img src="30.jpg"><div class="label">Memory 30</div></div>
+    <div class="card"><img src="31.jpg"><div class="label">Memory 31</div></div>
+    <div class="card"><img src="32.jpg"><div class="label">Memory 32</div></div>
+    <div class="card"><img src="33.jpg"><div class="label">Memory 33</div></div>
+    <div class="card"><img src="34.jpg"><div class="label">Memory 34</div></div>
+    <div class="card"><img src="35.jpg"><div class="label">Memory 35</div></div>
+
+    <div class="card"><img src="36.jpg"><div class="label">Memory 36</div></div>
+    <div class="card"><img src="37.jpg"><div class="label">Memory 37</div></div>
+    <div class="card"><img src="38.jpg"><div class="label">Memory 38</div></div>
+    <div class="card"><img src="39.jpg"><div class="label">Memory 39</div></div>
+    <div class="card"><img src="40.jpg"><div class="label">Memory 40</div></div>
+    <div class="card"><img src="41.jpg"><div class="label">Memory 41</div></div>
+    <div class="card"><img src="42.jpg"><div class="label">Memory 42</div></div>
+    <div class="card"><img src="43.jpg"><div class="label">Memory 43</div></div>
+    <div class="card"><img src="44.jpg"><div class="label">Memory 44</div></div>
+    <div class="card"><img src="45.jpg"><div class="label">Memory 45</div></div>
+    <div class="card"><img src="46.jpg"><div class="label">Memory 46</div></div>
+    <div class="card"><img src="47.jpg"><div class="label">Memory 47</div></div>
+    <div class="card"><img src="48.jpg"><div class="label">Memory 48</div></div>
+    <div class="card"><img src="49.jpg"><div class="label">Memory 49</div></div>
+    <div class="card"><img src="50.jpg"><div class="label">Memory 50</div></div>
+
+    <div class="card"><img src="51.jpg"><div class="label">Memory 51</div></div>
+    <div class="card"><img src="52.jpg"><div class="label">Memory 52</div></div>
+    <div class="card"><img src="53.jpg"><div class="label">Memory 53</div></div>
+    <div class="card"><img src="54.jpg"><div class="label">Memory 54</div></div>
+    <div class="card"><img src="55.jpg"><div class="label">Memory 55</div></div>
+    <div class="card"><img src="56.jpg"><div class="label">Memory 56</div></div>
+    <div class="card"><img src="57.jpg"><div class="label">Memory 57</div></div>
+    <div class="card"><img src="58.jpg"><div class="label">Memory 58</div></div>
+    <div class="card"><img src="59.jpg"><div class="label">Memory 59</div></div>
+    <div class="card"><img src="60.jpg"><div class="label">Memory 60</div></div>
+    <div class="card"><img src="61.jpg"><div class="label">Memory 61</div></div>
+    <div class="card"><img src="62.jpg"><div class="label">Memory 62</div></div>
+    <div class="card"><img src="63.jpg"><div class="label">Memory 63</div></div>
+    <div class="card"><img src="64.jpg"><div class="label">Memory 64</div></div>
+    <div class="card"><img src="65.jpg"><div class="label">Memory 65</div></div>
+
+    <div class="card"><img src="66.jpg"><div class="label">Memory 66</div></div>
+    <div class="card"><img src="67.jpg"><div class="label">Memory 67</div></div>
+    <div class="card"><video src="video1.mp4" controls></video><div class="label">Memory 68 (Video)</div></div>
+    <div class="card"><video src="video2.mp4" controls></video><div class="label">Memory 69 (Video)</div></div>
+    <div class="card"><img src="70.jpg"><div class="label">Memory 70</div></div>
+
+</div> <footer>
+    <p>Handcrafted for the Batch of 2025-26</p>
+    <p style="color: var(--gold); font-weight: bold;">PAWAN JAGIRDAR ☠️</p>
+</footer>
 
 </body>
-</html>
+    </html>
