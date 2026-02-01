@@ -6,38 +6,36 @@
     <title>JAGIRDAR | LEGENDARY GALLERY</title>
     <style>
         :root { --gold: #d4af37; --black: #050505; }
-        body { margin: 0; background: var(--black); color: white; font-family: 'Segoe UI', sans-serif; text-align: center; overflow-x: hidden; }
-        
-        /* ☠️ LOGIN SCREEN - Shuruat mein hidden rakhenge taaki jhatka na lage */
+        body { margin: 0; background: var(--black); color: white; font-family: 'Segoe UI', sans-serif; text-align: center; }
+
+        /* ☠️ LOGIN SCREEN (FORCED DISPLAY) */
         #login-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 9999; display: none; 
+            background: #000; z-index: 9999; display: flex; 
             align-items: center; justify-content: center; flex-direction: column;
         }
         .login-box {
             background: rgba(255,255,255,0.05); padding: 40px;
             border: 1px solid var(--gold); border-radius: 15px;
-            backdrop-filter: blur(10px); text-align: center; box-shadow: 0 0 30px rgba(212,175,55,0.2);
+            backdrop-filter: blur(10px); text-align: center;
         }
         .login-btn {
             padding: 12px 25px; margin: 10px; cursor: pointer; font-weight: bold;
             border-radius: 5px; width: 220px; display: block; border: none; transition: 0.3s;
         }
-        .login-btn:hover { transform: scale(1.05); }
 
         /* ☠️ GALLERY STYLE */
         header { padding: 40px 20px; }
         .tab-btn { background: transparent; border: 2px solid var(--gold); color: var(--gold); padding: 10px 25px; cursor: pointer; margin: 5px; transition: 0.4s; font-weight: bold; }
         .tab-btn.active { background: var(--gold); color: black; box-shadow: 0 0 15px var(--gold); }
         .container { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 20px; max-width: 1400px; margin: auto; }
-        .card { border: 1px solid rgba(212,175,55,0.1); overflow: hidden; background: #111; transition: 0.3s; }
-        .card:hover { border-color: var(--gold); }
+        .card { border: 1px solid rgba(212,175,55,0.1); overflow: hidden; background: #111; }
         .card img, .card video { width: 100%; height: 350px; object-fit: cover; }
-        .label { padding: 12px; color: var(--gold); font-size: 0.85rem; letter-spacing: 1px; }
+        .label { padding: 12px; color: var(--gold); font-size: 0.85rem; }
         
         /* ☠️ CHAT AREA */
         #chat-area { display: none; padding: 20px; max-width: 900px; margin: auto; }
-        footer { padding: 60px; color: var(--gold); opacity: 0.6; letter-spacing: 3px; font-size: 0.8rem; }
+        footer { padding: 60px; color: var(--gold); opacity: 0.6; font-size: 0.8rem; }
     </style>
 </head>
 <body>
@@ -45,15 +43,14 @@
 <div id="login-screen">
     <h1 style="color: var(--gold); letter-spacing: 12px; text-shadow: 0 0 15px rgba(212,175,55,0.5);">JAGIRDAR</h1>
     <div class="login-box">
-        <p style="color: #888; margin-bottom: 20px; font-size: 0.9rem;">IDENTITY REQUIRED</p>
         <button class="login-btn" style="background: #fff; color: #000;" onclick="loginGoogle()">SIGN IN WITH GOOGLE</button>
         <button class="login-btn" style="background: transparent; border: 1px solid var(--gold); color: var(--gold);" onclick="loginGuest()">CONTINUE AS GUEST</button>
     </div>
 </div>
 
-<div id="main-content" style="visibility: hidden;">
+<div id="main-content" style="display: none;">
     <header>
-        <h1 style="color: var(--gold); letter-spacing: 8px; margin-bottom: 30px;">JAGIRDAR</h1>
+        <h1 style="color: var(--gold); letter-spacing: 8px;">JAGIRDAR</h1>
         <div class="tabs">
             <button class="tab-btn active" onclick="showGallery('all')">ALL</button>
             <button class="tab-btn" onclick="showGallery('photo')">PHOTOS</button>
@@ -70,19 +67,17 @@
 
     <div id="chat-area">
         <div style="border: 2px solid var(--gold); border-radius: 15px; overflow: hidden; background: #000;">
-            <h2 style="color: var(--gold); padding: 10px; font-size: 1rem; margin: 0; background: rgba(212,175,55,0.1);">☠️ LEGACY CHAT ☠️</h2>
             <iframe src="https://deadsimplechat.com/VcwE7MpUc" width="100%" height="600px" frameborder="0"></iframe>
         </div>
     </div>
 
-    <footer>© 2026 JAGIRDAR LEGACY | UNSTOPPABLE ☠️</footer>
+    <footer>© 2026 JAGIRDAR LEGACY ☠️</footer>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 
 <script>
-    // ☠️ FIREBASE CONFIG
     const firebaseConfig = {
         apiKey: "AIzaSyChMaUpvqhOwLwePpPv-X-24jFzQmRfrZs",
         authDomain: "jagirdar-c39e8.firebaseapp.com",
@@ -95,31 +90,27 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
-    // LOGIN FUNCTIONS
-    function loginGoogle() {
-        const provider = new firebase.auth.GoogleAuthProvider();
-        auth.signInWithPopup(provider).catch(e => alert("Login Error: " + e.message));
-    }
-    function loginGuest() {
-        auth.signInAnonymously().catch(e => alert("Guest Access Error: " + e.message));
-    }
-
-    // ☠️ AUTH CHECK (PERSISTENCE)
+    // AUTH CHECK
     auth.onAuthStateChanged(user => {
-        const loginScreen = document.getElementById('login-screen');
-        const mainContent = document.getElementById('main-content');
-        
         if (user) {
-            loginScreen.style.display = 'none';
-            mainContent.style.visibility = 'visible';
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
             showGallery('all');
         } else {
-            loginScreen.style.display = 'flex';
-            mainContent.style.visibility = 'hidden';
+            document.getElementById('login-screen').style.display = 'flex';
+            document.getElementById('main-content').style.display = 'none';
         }
     });
 
-    // ☠️ MUSIC LOGIC
+    function loginGoogle() {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        auth.signInWithPopup(provider);
+    }
+    function loginGuest() {
+        auth.signInAnonymously();
+    }
+
+    // MUSIC
     function playSecretMusic() {
         const iframe = document.getElementById("bg-track");
         if(iframe) iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
@@ -129,27 +120,23 @@
         if(iframe) iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
     }
 
-    // ☠️ CHAT LOGIC (Verified Working)
+    // CHAT
     function showChat(e) {
         if(e) e.preventDefault();
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         if(e.target) e.target.classList.add('active');
-        
         document.getElementById('main-gallery').style.display = 'none';
         document.getElementById('chat-area').style.setProperty('display', 'block', 'important');
-        playSecretMusic();
     }
 
-    // ☠️ GALLERY LOGIC (With Sorting)
+    // GALLERY
     async function showGallery(category) {
         document.getElementById('chat-area').style.display = 'none';
         const container = document.getElementById('main-gallery');
         container.style.display = 'grid';
+        container.innerHTML = '☠️ LOADING...';
         
-        container.innerHTML = '<div style="grid-column: 1/-1; color: var(--gold);">☠️ LOADING LEGACY...</div>';
         let htmlContent = "";
-
-        // Static Files
         if(category === 'all' || category === 'photo') {
             for(let i=1; i<=13; i++) htmlContent += `<div class="card"><img src="${i}.jpg" onerror="this.src='${i}.jpeg'"><div class="label">MEMORY ${i}</div></div>`;
         }
@@ -157,7 +144,6 @@
             [14,15,16].forEach(v => htmlContent += `<div class="card"><video controls onplay="pauseMusic()" onpause="playSecretMusic()"><source src="${v}.mp4"></video><div class="label">VIDEO ${v}</div></div>`);
         }
 
-        // GitHub Sync
         try {
             const res = await fetch(`https://api.github.com/repos/jagirdar4898-hue/Memories-/contents/gallery`);
             const files = await res.json();
@@ -167,11 +153,11 @@
                 const isImg = name.endsWith('.jpg') || name.endsWith('.jpeg') || name.endsWith('.png');
                 const isVid = name.endsWith('.mp4');
                 if ((category==='all') || (category==='photo'&&isImg) || (category==='video'&&isVid)) {
-                    let media = isImg ? `<img src="${file.download_url}" loading="lazy">` : `<video controls onplay="pauseMusic()" onpause="playSecretMusic()"><source src="${file.download_url}"></video>`;
+                    let media = isImg ? `<img src="${file.download_url}">` : `<video controls onplay="pauseMusic()" onpause="playSecretMusic()"><source src="${file.download_url}"></video>`;
                     htmlContent += `<div class="card">${media}<div class="label">${file.name}</div></div>`;
                 }
             });
-        } catch(e) { console.log("Sync..."); }
+        } catch(e) {}
         container.innerHTML = htmlContent;
     }
 </script>
