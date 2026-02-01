@@ -6,9 +6,8 @@
     <title>JAGIRDAR | LEGENDARY GALLERY</title>
     <style>
         :root { --gold: #d4af37; --black: #050505; }
-        body { margin: 0; background: var(--black); color: white; font-family: 'Segoe UI', sans-serif; text-align: center; }
-
-        /* ☠️ LOGIN SCREEN (FORCED DISPLAY) */
+        body { margin: 0; background: var(--black); color: white; font-family: 'Segoe UI', sans-serif; text-align: center; overflow-x: hidden; }
+        
         #login-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #000; z-index: 9999; display: flex; 
@@ -24,16 +23,22 @@
             border-radius: 5px; width: 220px; display: block; border: none; transition: 0.3s;
         }
 
-        /* ☠️ GALLERY STYLE */
         header { padding: 40px 20px; }
         .tab-btn { background: transparent; border: 2px solid var(--gold); color: var(--gold); padding: 10px 25px; cursor: pointer; margin: 5px; transition: 0.4s; font-weight: bold; }
         .tab-btn.active { background: var(--gold); color: black; box-shadow: 0 0 15px var(--gold); }
-        .container { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 20px; max-width: 1400px; margin: auto; }
-        .card { border: 1px solid rgba(212,175,55,0.1); overflow: hidden; background: #111; }
-        .card img, .card video { width: 100%; height: 350px; object-fit: cover; }
-        .label { padding: 12px; color: var(--gold); font-size: 0.85rem; }
         
-        /* ☠️ CHAT AREA */
+        .container { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; padding: 20px; max-width: 1400px; margin: auto; }
+        
+        /* ☠️ CARD ENHANCEMENTS */
+        .card { border: 1px solid rgba(212,175,55,0.1); overflow: hidden; background: #111; border-radius: 10px; }
+        .card img, .card video { width: 100%; height: 300px; object-fit: cover; }
+        
+        .actions { display: flex; justify-content: space-around; padding: 10px; border-top: 1px solid #222; }
+        .action-btn { background: none; border: none; color: var(--gold); cursor: pointer; font-size: 1.2rem; }
+        
+        .comment-section { padding: 10px; text-align: left; background: #0a0a0a; max-height: 100px; overflow-y: auto; font-size: 0.8rem; }
+        .comment-input { width: 80%; background: #222; border: 1px solid var(--gold); color: white; padding: 5px; border-radius: 3px; }
+        
         #chat-area { display: none; padding: 20px; max-width: 900px; margin: auto; }
         footer { padding: 60px; color: var(--gold); opacity: 0.6; font-size: 0.8rem; }
     </style>
@@ -41,7 +46,7 @@
 <body>
 
 <div id="login-screen">
-    <h1 style="color: var(--gold); letter-spacing: 12px; text-shadow: 0 0 15px rgba(212,175,55,0.5);">JAGIRDAR</h1>
+    <h1 style="color: var(--gold); letter-spacing: 12px;">JAGIRDAR</h1>
     <div class="login-box">
         <button class="login-btn" style="background: #fff; color: #000;" onclick="loginGoogle()">SIGN IN WITH GOOGLE</button>
         <button class="login-btn" style="background: transparent; border: 1px solid var(--gold); color: var(--gold);" onclick="loginGuest()">CONTINUE AS GUEST</button>
@@ -59,10 +64,6 @@
         </div>
     </header>
 
-    <div style="display:none;">
-        <iframe id="bg-track" src="https://www.youtube.com/embed/IgM1lAXppwI?enablejsapi=1&loop=1&playlist=IgM1lAXppwI"></iframe>
-    </div>
-
     <div class="container" id="main-gallery"></div>
 
     <div id="chat-area">
@@ -71,11 +72,12 @@
         </div>
     </div>
 
-    <footer>© 2026 JAGIRDAR LEGACY ☠️</footer>
+    <footer>© 2026 JAGIRDAR LEGACY | UNSTOPPABLE ☠️</footer>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
 <script>
     const firebaseConfig = {
@@ -89,8 +91,8 @@
 
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
+    const db = firebase.firestore();
 
-    // AUTH CHECK
     auth.onAuthStateChanged(user => {
         if (user) {
             document.getElementById('login-screen').style.display = 'none';
@@ -98,38 +100,48 @@
             showGallery('all');
         } else {
             document.getElementById('login-screen').style.display = 'flex';
-            document.getElementById('main-content').style.display = 'none';
         }
     });
 
-    function loginGoogle() {
-        const provider = new firebase.auth.GoogleAuthProvider();
-        auth.signInWithPopup(provider);
-    }
-    function loginGuest() {
-        auth.signInAnonymously();
+    function loginGoogle() { auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()); }
+    function loginGuest() { auth.signInAnonymously(); }
+
+    // ☠️ SOCIAL FEATURES
+    async function toggleLike(id) {
+        const ref = db.collection('likes').doc(id);
+        const doc = await ref.get();
+        let count = doc.exists ? doc.data().count : 0;
+        await ref.set({ count: count + 1 });
+        document.getElementById(`like-count-${id}`).innerText = count + 1;
     }
 
-    // MUSIC
-    function playSecretMusic() {
-        const iframe = document.getElementById("bg-track");
-        if(iframe) iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-    }
-    function pauseMusic() {
-        const iframe = document.getElementById("bg-track");
-        if(iframe) iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+    async function addComment(id) {
+        const input = document.getElementById(`input-${id}`);
+        if(!input.value) return;
+        const ref = db.collection('comments').doc(id).collection('list');
+        await ref.add({ text: input.value, user: auth.currentUser.displayName || "Guest", time: Date.now() });
+        input.value = '';
+        loadComments(id);
     }
 
-    // CHAT
+    async function loadComments(id) {
+        const box = document.getElementById(`comments-${id}`);
+        const snap = await db.collection('comments').doc(id).collection('list').orderBy('time', 'desc').limit(5).get();
+        box.innerHTML = snap.docs.map(d => `<div><b>${d.data().user}:</b> ${d.data().text}</div>`).join('');
+    }
+
+    function shareMedia(url) {
+        const text = `Check out this legacy memory: ${url}`;
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`);
+    }
+
     function showChat(e) {
-        if(e) e.preventDefault();
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        if(e.target) e.target.classList.add('active');
+        e.target.classList.add('active');
         document.getElementById('main-gallery').style.display = 'none';
-        document.getElementById('chat-area').style.setProperty('display', 'block', 'important');
+        document.getElementById('chat-area').style.display = 'block';
     }
 
-    // GALLERY
     async function showGallery(category) {
         document.getElementById('chat-area').style.display = 'none';
         const container = document.getElementById('main-gallery');
@@ -137,29 +149,35 @@
         container.innerHTML = '☠️ LOADING...';
         
         let htmlContent = "";
-        if(category === 'all' || category === 'photo') {
-            for(let i=1; i<=13; i++) htmlContent += `<div class="card"><img src="${i}.jpg" onerror="this.src='${i}.jpeg'"><div class="label">MEMORY ${i}</div></div>`;
+        const res = await fetch(`https://api.github.com/repos/jagirdar4898-hue/Memories-/contents/gallery`);
+        const files = await res.json();
+        
+        for(let file of files.reverse()) {
+            const name = file.name.toLowerCase();
+            const isImg = name.endsWith('.jpg') || name.endsWith('.jpeg') || name.endsWith('.png');
+            if(isImg) {
+                const id = name.replace(/\.[^/.]+$/, "");
+                htmlContent += `
+                <div class="card">
+                    <img src="${file.download_url}">
+                    <div class="actions">
+                        <button class="action-btn" onclick="toggleLike('${id}')">❤️ <span id="like-count-${id}">0</span></button>
+                        <button class="action-btn" onclick="shareMedia('${file.download_url}')">🔗</button>
+                    </div>
+                    <div class="comment-section" id="comments-${id}">Loading comments...</div>
+                    <div style="padding:10px;">
+                        <input class="comment-input" id="input-${id}" placeholder="Write comment...">
+                        <button onclick="addComment('${id}')" style="background:var(--gold); border:none; padding:5px;">➤</button>
+                    </div>
+                </div>`;
+                setTimeout(() => {
+                    db.collection('likes').doc(id).get().then(d => { if(d.exists) document.getElementById(`like-count-${id}`).innerText = d.data().count; });
+                    loadComments(id);
+                }, 500);
+            }
         }
-        if(category === 'all' || category === 'video') {
-            [14,15,16].forEach(v => htmlContent += `<div class="card"><video controls onplay="pauseMusic()" onpause="playSecretMusic()"><source src="${v}.mp4"></video><div class="label">VIDEO ${v}</div></div>`);
-        }
-
-        try {
-            const res = await fetch(`https://api.github.com/repos/jagirdar4898-hue/Memories-/contents/gallery`);
-            const files = await res.json();
-            files.reverse().forEach(file => {
-                const name = file.name.toLowerCase();
-                if(name === 'index.txt' || name === '.ds_store') return;
-                const isImg = name.endsWith('.jpg') || name.endsWith('.jpeg') || name.endsWith('.png');
-                const isVid = name.endsWith('.mp4');
-                if ((category==='all') || (category==='photo'&&isImg) || (category==='video'&&isVid)) {
-                    let media = isImg ? `<img src="${file.download_url}">` : `<video controls onplay="pauseMusic()" onpause="playSecretMusic()"><source src="${file.download_url}"></video>`;
-                    htmlContent += `<div class="card">${media}<div class="label">${file.name}</div></div>`;
-                }
-            });
-        } catch(e) {}
         container.innerHTML = htmlContent;
     }
 </script>
 </body>
-</html>
+    </html>
