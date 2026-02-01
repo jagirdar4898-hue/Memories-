@@ -3,7 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JAGIRDAR | LEGENDARY GALLERY</title>
+    
+    <title>JAGIRDAR | PAWAN SINGH RAJPUROHIT | LEGENDARY GALLERY</title>
+    <meta name="description" content="Official JAGIRDAR Gallery by Pawan Singh Rajpurohit. Memories of Jain School Osian, Arts Class 12, Year 2025-26. Explore the legacy of Jagirdar Pawan.">
+    <meta name="keywords" content="JAGIRDAR, Pawan Singh Rajpurohit, Jagirdar Pawan, Jain School Osian, Arts Class 12, Year 2025 26, Jagirdar Gallery, Osian School Memories, Pawan Jagirdar Legacy">
+    <meta name="author" content="Pawan Singh Rajpurohit">
+    <meta name="robots" content="index, follow">
+    
+    <meta property="og:title" content="JAGIRDAR | PAWAN SINGH RAJPUROHIT">
+    <meta property="og:description" content="Exclusive Gallery: Jain School Osian | Arts Class 12 | 2025-26">
+    <meta property="og:type" content="website">
+    
     <style>
         :root { --gold: #d4af37; --black: #050505; }
         body { margin: 0; background: var(--black); color: white; font-family: 'Segoe UI', sans-serif; text-align: center; overflow-x: hidden; }
@@ -29,15 +39,15 @@
         
         .container { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; padding: 20px; max-width: 1400px; margin: auto; }
         
-        /* ☠️ CARD ENHANCEMENTS */
-        .card { border: 1px solid rgba(212,175,55,0.1); overflow: hidden; background: #111; border-radius: 10px; }
+        .card { border: 1px solid rgba(212,175,55,0.1); overflow: hidden; background: #111; border-radius: 10px; position: relative; }
         .card img, .card video { width: 100%; height: 300px; object-fit: cover; }
         
         .actions { display: flex; justify-content: space-around; padding: 10px; border-top: 1px solid #222; }
-        .action-btn { background: none; border: none; color: var(--gold); cursor: pointer; font-size: 1.2rem; }
+        .action-btn { background: none; border: none; color: var(--gold); cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; gap: 5px; }
         
-        .comment-section { padding: 10px; text-align: left; background: #0a0a0a; max-height: 100px; overflow-y: auto; font-size: 0.8rem; }
-        .comment-input { width: 80%; background: #222; border: 1px solid var(--gold); color: white; padding: 5px; border-radius: 3px; }
+        .comment-section { padding: 10px; text-align: left; background: #0a0a0a; max-height: 120px; overflow-y: auto; font-size: 0.85rem; border-top: 1px solid #222; }
+        .comment-input-area { padding: 10px; display: flex; gap: 5px; }
+        .comment-input { flex: 1; background: #222; border: 1px solid var(--gold); color: white; padding: 8px; border-radius: 5px; }
         
         #chat-area { display: none; padding: 20px; max-width: 900px; margin: auto; }
         footer { padding: 60px; color: var(--gold); opacity: 0.6; font-size: 0.8rem; }
@@ -63,6 +73,10 @@
             <button class="tab-btn" onclick="showChat(event)">✉️</button>
         </div>
     </header>
+
+    <div style="display:none;">
+        <iframe id="bg-track" src="https://www.youtube.com/embed/IgM1lAXppwI?enablejsapi=1&loop=1&playlist=IgM1lAXppwI"></iframe>
+    </div>
 
     <div class="container" id="main-gallery"></div>
 
@@ -92,32 +106,50 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
+    auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
     auth.onAuthStateChanged(user => {
+        const loginScreen = document.getElementById('login-screen');
+        const mainContent = document.getElementById('main-content');
         if (user) {
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('main-content').style.display = 'block';
+            loginScreen.style.display = 'none';
+            mainContent.style.display = 'block';
             showGallery('all');
         } else {
-            document.getElementById('login-screen').style.display = 'flex';
+            loginScreen.style.display = 'flex';
+            mainContent.style.display = 'none';
         }
     });
 
     function loginGoogle() { auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()); }
     function loginGuest() { auth.signInAnonymously(); }
 
-    // ☠️ SOCIAL FEATURES
     async function toggleLike(id) {
-        const ref = db.collection('likes').doc(id);
-        const doc = await ref.get();
-        let count = doc.exists ? doc.data().count : 0;
-        await ref.set({ count: count + 1 });
-        document.getElementById(`like-count-${id}`).innerText = count + 1;
+        if(!auth.currentUser) return;
+        const userId = auth.currentUser.uid;
+        const likeRef = db.collection('likes').doc(id);
+        const userLikeRef = likeRef.collection('users').doc(userId);
+        const doc = await userLikeRef.get();
+        const mainDoc = await likeRef.get();
+        let count = mainDoc.exists ? mainDoc.data().count : 0;
+
+        if (doc.exists) {
+            await userLikeRef.delete();
+            count = Math.max(0, count - 1);
+            await likeRef.set({ count: count });
+            document.getElementById(`heart-${id}`).style.color = "var(--gold)";
+        } else {
+            await userLikeRef.set({ liked: true });
+            count = count + 1;
+            await likeRef.set({ count: count });
+            document.getElementById(`heart-${id}`).style.color = "red";
+        }
+        document.getElementById(`like-count-${id}`).innerText = count;
     }
 
     async function addComment(id) {
         const input = document.getElementById(`input-${id}`);
-        if(!input.value) return;
+        if(!input.value || !auth.currentUser) return;
         const ref = db.collection('comments').doc(id).collection('list');
         await ref.add({ text: input.value, user: auth.currentUser.displayName || "Guest", time: Date.now() });
         input.value = '';
@@ -126,58 +158,77 @@
 
     async function loadComments(id) {
         const box = document.getElementById(`comments-${id}`);
-        const snap = await db.collection('comments').doc(id).collection('list').orderBy('time', 'desc').limit(5).get();
-        box.innerHTML = snap.docs.map(d => `<div><b>${d.data().user}:</b> ${d.data().text}</div>`).join('');
+        const snap = await db.collection('comments').doc(id).collection('list').orderBy('time', 'desc').limit(10).get();
+        box.innerHTML = snap.docs.length ? snap.docs.map(d => `<div><b style="color:var(--gold)">${d.data().user}:</b> ${d.data().text}</div>`).join('') : "No comments yet.";
     }
 
     function shareMedia(url) {
-        const text = `Check out this legacy memory: ${url}`;
-        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`);
+        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent("Check this out on JAGIRDAR: " + url)}`);
     }
 
     function showChat(e) {
+        if(e) e.preventDefault();
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         e.target.classList.add('active');
         document.getElementById('main-gallery').style.display = 'none';
         document.getElementById('chat-area').style.display = 'block';
     }
 
+    function playSecretMusic() {
+        const iframe = document.getElementById("bg-track");
+        if(iframe) iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+    }
+    function pauseMusic() {
+        const iframe = document.getElementById("bg-track");
+        if(iframe) iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+    }
+
     async function showGallery(category) {
         document.getElementById('chat-area').style.display = 'none';
         const container = document.getElementById('main-gallery');
         container.style.display = 'grid';
-        container.innerHTML = '☠️ LOADING...';
+        container.innerHTML = '<div style="grid-column: 1/-1;">☠️ LOADING LEGACY...</div>';
         
         let htmlContent = "";
         const res = await fetch(`https://api.github.com/repos/jagirdar4898-hue/Memories-/contents/gallery`);
         const files = await res.json();
-        
+        const userId = auth.currentUser ? auth.currentUser.uid : null;
+
         for(let file of files.reverse()) {
             const name = file.name.toLowerCase();
             const isImg = name.endsWith('.jpg') || name.endsWith('.jpeg') || name.endsWith('.png');
-            if(isImg) {
-                const id = name.replace(/\.[^/.]+$/, "");
+            const isVid = name.endsWith('.mp4');
+            const id = btoa(name).replace(/=/g, "");
+
+            if ((category==='all') || (category==='photo'&&isImg) || (category==='video'&&isVid)) {
+                let media = isImg ? `<img src="${file.download_url}" loading="lazy">` : `<video controls onplay="pauseMusic()" onpause="playSecretMusic()"><source src="${file.download_url}"></video>`;
                 htmlContent += `
                 <div class="card">
-                    <img src="${file.download_url}">
+                    ${media}
                     <div class="actions">
-                        <button class="action-btn" onclick="toggleLike('${id}')">❤️ <span id="like-count-${id}">0</span></button>
-                        <button class="action-btn" onclick="shareMedia('${file.download_url}')">↗️</button>
+                        <button class="action-btn" onclick="toggleLike('${id}')"><span id="heart-${id}">❤</span> <span id="like-count-${id}">0</span></button>
+                        <button class="action-btn" onclick="shareMedia('${file.download_url}')">🔗 SHARE</button>
                     </div>
-                    <div class="comment-section" id="comments-${id}">Loading comments...</div>
-                    <div style="padding:10px;">
-                        <input class="comment-input" id="input-${id}" placeholder="Write comment...">
-                        <button onclick="addComment('${id}')" style="background:var(--gold); border:none; padding:5px;">➤</button>
+                    <div class="comment-section" id="comments-${id}">Loading...</div>
+                    <div class="comment-input-area">
+                        <input class="comment-input" id="input-${id}" placeholder="Add a comment...">
+                        <button onclick="addComment('${id}')" style="background:var(--gold); border:none; padding:8px; cursor:pointer; border-radius:5px;">➤</button>
                     </div>
                 </div>`;
-                setTimeout(() => {
-                    db.collection('likes').doc(id).get().then(d => { if(d.exists) document.getElementById(`like-count-${id}`).innerText = d.data().count; });
+                
+                setTimeout(async () => {
+                    const d = await db.collection('likes').doc(id).get();
+                    if(d.exists) document.getElementById(`like-count-${id}`).innerText = d.data().count;
+                    if(userId) {
+                        const uLike = await db.collection('likes').doc(id).collection('users').doc(userId).get();
+                        if(uLike.exists) document.getElementById(`heart-${id}`).style.color = "red";
+                    }
                     loadComments(id);
-                }, 500);
+                }, 100);
             }
         }
         container.innerHTML = htmlContent;
     }
 </script>
 </body>
-    </html>
+            </html>
