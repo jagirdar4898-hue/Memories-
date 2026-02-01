@@ -5,130 +5,121 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JAGIRDAR | LEGENDARY GALLERY</title>
     <style>
-        :root {
-            --gold: #d4af37;
-            --premium-black: #050505;
+        :root { --gold: #d4af37; --black: #050505; }
+        body { margin: 0; background: var(--black); color: white; font-family: 'Segoe UI', sans-serif; text-align: center; overflow-x: hidden; }
+        
+        /* ☠️ LOGIN SCREEN - Shuruat mein hidden rakhenge taaki jhatka na lage */
+        #login-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 9999; display: none; 
+            align-items: center; justify-content: center; flex-direction: column;
         }
+        .login-box {
+            background: rgba(255,255,255,0.05); padding: 40px;
+            border: 1px solid var(--gold); border-radius: 15px;
+            backdrop-filter: blur(10px); text-align: center; box-shadow: 0 0 30px rgba(212,175,55,0.2);
+        }
+        .login-btn {
+            padding: 12px 25px; margin: 10px; cursor: pointer; font-weight: bold;
+            border-radius: 5px; width: 220px; display: block; border: none; transition: 0.3s;
+        }
+        .login-btn:hover { transform: scale(1.05); }
 
-        body {
-            margin: 0;
-            background: var(--premium-black);
-            color: white;
-            font-family: 'Segoe UI', sans-serif;
-            text-align: center;
-            background-image: radial-gradient(circle, rgba(0,0,0,0.8) 0%, #050505 100%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 100 100'%3E%3Ctext y='50' font-size='30' opacity='0.1'%3E☠️%3C/text%3E%3C/svg%3E");
-            background-attachment: fixed;
-        }
-
-        header { padding: 60px 20px; }
-        header h1 {
-            font-size: 3.5rem;
-            color: var(--gold);
-            letter-spacing: 12px;
-            text-transform: uppercase;
-            text-shadow: 0 0 20px rgba(212,175,55,0.5);
-            margin: 0;
-        }
-
-        .tabs { margin: 40px 0; }
-        .tab-btn {
-            background: transparent;
-            border: 2px solid var(--gold);
-            color: var(--gold);
-            padding: 12px 30px;
-            font-weight: bold;
-            cursor: pointer;
-            margin: 8px;
-            transition: 0.4s;
-            letter-spacing: 2px;
-            font-size: 1.1rem;
-        }
-        .tab-btn:hover, .tab-btn.active {
-            background: var(--gold);
-            color: black;
-            box-shadow: 0 0 15px var(--gold);
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: auto;
-            padding: 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
-        }
-
-        .card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(212,175,55,0.1);
-            overflow: hidden;
-            transition: 0.5s;
-            backdrop-filter: blur(10px);
-        }
-        .card img, .card video {
-            width: 100%;
-            height: 350px;
-            object-fit: cover;
-            display: block;
-        }
-
-        .label { padding: 15px; font-size: 0.85rem; color: var(--gold); text-transform: uppercase; background: rgba(0,0,0,0.9); }
-
-        /* ☠️ CHAT AREA STYLE */
-        #chat-area {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 10px;
-            display: none; /* Starting mein hidden */
-        }
-
-        .chat-box-border {
-            border: 2px solid var(--gold);
-            border-radius: 15px;
-            overflow: hidden;
-            background: #000;
-            box-shadow: 0 0 30px rgba(212,175,55,0.2);
-        }
-
-        footer { padding: 80px 20px; color: var(--gold); letter-spacing: 5px; border-top: 1px solid rgba(212,175,55,0.2); }
+        /* ☠️ GALLERY STYLE */
+        header { padding: 40px 20px; }
+        .tab-btn { background: transparent; border: 2px solid var(--gold); color: var(--gold); padding: 10px 25px; cursor: pointer; margin: 5px; transition: 0.4s; font-weight: bold; }
+        .tab-btn.active { background: var(--gold); color: black; box-shadow: 0 0 15px var(--gold); }
+        .container { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 20px; max-width: 1400px; margin: auto; }
+        .card { border: 1px solid rgba(212,175,55,0.1); overflow: hidden; background: #111; transition: 0.3s; }
+        .card:hover { border-color: var(--gold); }
+        .card img, .card video { width: 100%; height: 350px; object-fit: cover; }
+        .label { padding: 12px; color: var(--gold); font-size: 0.85rem; letter-spacing: 1px; }
+        
+        /* ☠️ CHAT AREA */
+        #chat-area { display: none; padding: 20px; max-width: 900px; margin: auto; }
+        footer { padding: 60px; color: var(--gold); opacity: 0.6; letter-spacing: 3px; font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>JAGIRDAR</h1>
-    <div class="tabs">
-        <button class="tab-btn active" onclick="showGallery('all')">ALL</button>
-        <button class="tab-btn" onclick="showGallery('photo')">PHOTOS</button>
-        <button class="tab-btn" onclick="showGallery('video')">VIDEOS</button>
-        <button class="tab-btn" onclick="showChat(event)">✉️</button>
-    </div>
-</header>
-
-<div style="display:none;">
-    <iframe id="bg-track" src="https://www.youtube.com/embed/IgM1lAXppwI?enablejsapi=1&loop=1&playlist=IgM1lAXppwI" allow="autoplay"></iframe>
-</div>
-
-<div class="container" id="main-gallery"></div>
-
-<div id="chat-area">
-    <div class="chat-box-border">
-        <h2 style="color: var(--gold); letter-spacing: 5px; padding: 15px 0; margin: 0; background: rgba(212,175,55,0.1);">☠️ LEGACY CHAT ☠️</h2>
-        <iframe src="https://deadsimplechat.com/VcwE7MpUc" width="100%" height="600px" frameborder="0"></iframe>
+<div id="login-screen">
+    <h1 style="color: var(--gold); letter-spacing: 12px; text-shadow: 0 0 15px rgba(212,175,55,0.5);">JAGIRDAR</h1>
+    <div class="login-box">
+        <p style="color: #888; margin-bottom: 20px; font-size: 0.9rem;">IDENTITY REQUIRED</p>
+        <button class="login-btn" style="background: #fff; color: #000;" onclick="loginGoogle()">SIGN IN WITH GOOGLE</button>
+        <button class="login-btn" style="background: transparent; border: 1px solid var(--gold); color: var(--gold);" onclick="loginGuest()">CONTINUE AS GUEST</button>
     </div>
 </div>
 
-<footer>
-    © 2026 JAGIRDAR | SAKHT LAUNDA LEGACY ☠️
-</footer>
+<div id="main-content" style="visibility: hidden;">
+    <header>
+        <h1 style="color: var(--gold); letter-spacing: 8px; margin-bottom: 30px;">JAGIRDAR</h1>
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showGallery('all')">ALL</button>
+            <button class="tab-btn" onclick="showGallery('photo')">PHOTOS</button>
+            <button class="tab-btn" onclick="showGallery('video')">VIDEOS</button>
+            <button class="tab-btn" onclick="showChat(event)">✉️</button>
+        </div>
+    </header>
+
+    <div style="display:none;">
+        <iframe id="bg-track" src="https://www.youtube.com/embed/IgM1lAXppwI?enablejsapi=1&loop=1&playlist=IgM1lAXppwI"></iframe>
+    </div>
+
+    <div class="container" id="main-gallery"></div>
+
+    <div id="chat-area">
+        <div style="border: 2px solid var(--gold); border-radius: 15px; overflow: hidden; background: #000;">
+            <h2 style="color: var(--gold); padding: 10px; font-size: 1rem; margin: 0; background: rgba(212,175,55,0.1);">☠️ LEGACY CHAT ☠️</h2>
+            <iframe src="https://deadsimplechat.com/VcwE7MpUc" width="100%" height="600px" frameborder="0"></iframe>
+        </div>
+    </div>
+
+    <footer>© 2026 JAGIRDAR LEGACY | UNSTOPPABLE ☠️</footer>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 
 <script>
-    const container = document.getElementById('main-gallery');
-    const chatArea = document.getElementById('chat-area');
-    const user = "jagirdar4898-hue";
-    const repo = "Memories-";
-    const folder = "gallery";
+    // ☠️ FIREBASE CONFIG
+    const firebaseConfig = {
+        apiKey: "AIzaSyChMaUpvqhOwLwePpPv-X-24jFzQmRfrZs",
+        authDomain: "jagirdar-c39e8.firebaseapp.com",
+        projectId: "jagirdar-c39e8",
+        storageBucket: "jagirdar-c39e8.firebasestorage.app",
+        messagingSenderId: "379511970061",
+        appId: "1:379511970061:web:abb7e3bda9d76617687844"
+    };
 
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // LOGIN FUNCTIONS
+    function loginGoogle() {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        auth.signInWithPopup(provider).catch(e => alert("Login Error: " + e.message));
+    }
+    function loginGuest() {
+        auth.signInAnonymously().catch(e => alert("Guest Access Error: " + e.message));
+    }
+
+    // ☠️ AUTH CHECK (PERSISTENCE)
+    auth.onAuthStateChanged(user => {
+        const loginScreen = document.getElementById('login-screen');
+        const mainContent = document.getElementById('main-content');
+        
+        if (user) {
+            loginScreen.style.display = 'none';
+            mainContent.style.visibility = 'visible';
+            showGallery('all');
+        } else {
+            loginScreen.style.display = 'flex';
+            mainContent.style.visibility = 'hidden';
+        }
+    });
+
+    // ☠️ MUSIC LOGIC
     function playSecretMusic() {
         const iframe = document.getElementById("bg-track");
         if(iframe) iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
@@ -137,79 +128,52 @@
         const iframe = document.getElementById("bg-track");
         if(iframe) iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
     }
-    function resumeMusic() {
-        const iframe = document.getElementById("bg-track");
-        if(iframe) iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-    }
 
-    // ☠️ FORCE SHOW CHAT
+    // ☠️ CHAT LOGIC (Verified Working)
     function showChat(e) {
         if(e) e.preventDefault();
-        
-        // Buttons highlight
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        if(e && e.target) e.target.classList.add('active');
-
-        // Sabse Pehle Gallery hatao
-        container.style.display = 'none';
+        if(e.target) e.target.classList.add('active');
         
-        // Ab Chat dikhao (With full power)
-        const chatBox = document.getElementById('chat-area');
-        if(chatBox) {
-            chatBox.setAttribute('style', 'display: block !important; visibility: visible !important; opacity: 1 !important; min-height: 700px;');
-            console.log("Chat Forced Open");
-        } else {
-            alert("Bhai, 'chat-area' wala div nahi mil raha code mein!");
-        }
-        
+        document.getElementById('main-gallery').style.display = 'none';
+        document.getElementById('chat-area').style.setProperty('display', 'block', 'important');
         playSecretMusic();
     }
 
+    // ☠️ GALLERY LOGIC (With Sorting)
     async function showGallery(category) {
-        if(window.event && window.event.target.tagName === 'BUTTON') {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            window.event.target.classList.add('active');
-        }
-
-        // Gallery ON, Chat OFF
+        document.getElementById('chat-area').style.display = 'none';
+        const container = document.getElementById('main-gallery');
         container.style.display = 'grid';
-        const chatBox = document.getElementById('chat-area');
-        if(chatBox) chatBox.style.setProperty('display', 'none', 'important');
-
-        container.innerHTML = '<div style="grid-column: 1/-1; color: var(--gold); font-size: 1.5rem; padding: 50px;">☠️ LOADING...</div>';
         
+        container.innerHTML = '<div style="grid-column: 1/-1; color: var(--gold);">☠️ LOADING LEGACY...</div>';
         let htmlContent = "";
+
+        // Static Files
         if(category === 'all' || category === 'photo') {
-            for (let i = 1; i <= 13; i++) {
-                htmlContent += `<div class="card"><img src="${i}.jpg" onerror="this.src='${i}.jpeg'" loading="lazy"><div class="label">MEMORY ${i}</div></div>`;
-            }
+            for(let i=1; i<=13; i++) htmlContent += `<div class="card"><img src="${i}.jpg" onerror="this.src='${i}.jpeg'"><div class="label">MEMORY ${i}</div></div>`;
         }
         if(category === 'all' || category === 'video') {
-            [14, 15, 16].forEach(v => {
-                htmlContent += `<div class="card"><video controls onplay="pauseMusic()" onpause="resumeMusic()"><source src="${v}.mp4"></video><div class="label">VIDEO ${v}</div></div>`;
-            });
+            [14,15,16].forEach(v => htmlContent += `<div class="card"><video controls onplay="pauseMusic()" onpause="playSecretMusic()"><source src="${v}.mp4"></video><div class="label">VIDEO ${v}</div></div>`);
         }
 
+        // GitHub Sync
         try {
-            const res = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${folder}`);
-            let files = await res.json();
-            files.reverse(); 
-            files.forEach(file => {
+            const res = await fetch(`https://api.github.com/repos/jagirdar4898-hue/Memories-/contents/gallery`);
+            const files = await res.json();
+            files.reverse().forEach(file => {
                 const name = file.name.toLowerCase();
                 if(name === 'index.txt' || name === '.ds_store') return;
-                const isImg = name.endsWith('.jpg') || name.endsWith('.jpeg') || name.endsWith('.png') || name.endsWith('.webp');
-                const isVid = name.endsWith('.mp4') || name.endsWith('.mov');
-                if ((category === 'all') || (category === 'photo' && isImg) || (category === 'video' && isVid)) {
-                    let media = isImg ? `<img src="${file.download_url}" loading="lazy">` : `<video controls onplay="pauseMusic()" onpause="resumeMusic()"><source src="${file.download_url}"></video>`;
+                const isImg = name.endsWith('.jpg') || name.endsWith('.jpeg') || name.endsWith('.png');
+                const isVid = name.endsWith('.mp4');
+                if ((category==='all') || (category==='photo'&&isImg) || (category==='video'&&isVid)) {
+                    let media = isImg ? `<img src="${file.download_url}" loading="lazy">` : `<video controls onplay="pauseMusic()" onpause="playSecretMusic()"><source src="${file.download_url}"></video>`;
                     htmlContent += `<div class="card">${media}<div class="label">${file.name}</div></div>`;
                 }
             });
-        } catch (e) { }
+        } catch(e) { console.log("Sync..."); }
         container.innerHTML = htmlContent;
     }
-
-    window.onload = () => showGallery('all');
 </script>
-
 </body>
 </html>
