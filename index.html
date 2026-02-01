@@ -3,12 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>JAGIRDAR | LEGENDARY GALLERY | Class 12 Arts 2025-26</title>
-    <meta name="description" content="Official memories of Jagirdar and friends from Class 12 Arts, Jain School (2025-26). Exploring the Sakht Launda Legacy through photos and videos.">
-    <meta name="keywords" content="Jagirdar, Jagirdar Memories, Jain School Class 12 Arts, Pawan Jagirdar, Sakht Launda Legacy, School Memories 2026">
-    <meta name="author" content="Jagirdar">
-
+    <title>JAGIRDAR | LEGENDARY GALLERY</title>
     <style>
         :root {
             --gold: #d4af37;
@@ -35,20 +30,18 @@
             margin: 0;
         }
 
-        /* TABS STYLE */
         .tabs { margin: 40px 0; }
         .tab-btn {
             background: transparent;
             border: 2px solid var(--gold);
             color: var(--gold);
-            padding: 12px 35px;
+            padding: 12px 30px;
             font-weight: bold;
-            text-transform: uppercase;
             cursor: pointer;
             margin: 8px;
             transition: 0.4s;
             letter-spacing: 2px;
-            border-radius: 0;
+            font-size: 1.1rem;
         }
         .tab-btn:hover, .tab-btn.active {
             background: var(--gold);
@@ -69,53 +62,46 @@
             background: rgba(255,255,255,0.03);
             border: 1px solid rgba(212,175,55,0.1);
             overflow: hidden;
-            transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: 0.5s;
             backdrop-filter: blur(10px);
         }
-        .card:hover { 
-            transform: translateY(-10px) scale(1.02); 
-            border-color: var(--gold);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-        }
-
         .card img, .card video {
             width: 100%;
-            height: 350px; /* Fixed height for consistency */
+            height: 350px;
             object-fit: cover;
             display: block;
-            filter: contrast(1.1) saturate(1.1);
         }
 
-        .label { 
-            padding: 15px; 
-            font-size: 0.85rem; 
-            color: var(--gold); 
-            text-transform: uppercase; 
-            background: rgba(0,0,0,0.9);
-            border-top: 1px solid rgba(212,175,55,0.2);
+        .label { padding: 15px; font-size: 0.85rem; color: var(--gold); text-transform: uppercase; background: rgba(0,0,0,0.9); }
+
+        /* ☠️ CHAT AREA STYLE */
+        #chat-area {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 10px;
+            display: none; /* Starting mein hidden */
         }
 
-        footer { 
-            padding: 80px 20px; 
-            color: var(--gold); 
-            letter-spacing: 5px; 
-            font-size: 0.9rem;
-            border-top: 1px solid rgba(212,175,55,0.2);
-            margin-top: 50px;
+        .chat-box-border {
+            border: 2px solid var(--gold);
+            border-radius: 15px;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 0 0 30px rgba(212,175,55,0.2);
         }
+
+        footer { padding: 80px 20px; color: var(--gold); letter-spacing: 5px; border-top: 1px solid rgba(212,175,55,0.2); }
     </style>
 </head>
 <body>
 
 <header>
     <h1>JAGIRDAR</h1>
-    <p style="color: var(--gold); letter-spacing: 2px; margin-top: 10px;">LEGACY OF 2025-26</p>
     <div class="tabs">
-        <button class="tab-btn active" onclick="playSecretMusic(); showGallery('all')">ALL</button>
-        <button class="tab-btn" onclick="playSecretMusic(); showGallery('photo')">PHOTOS</button>
-        <button class="tab-btn" onclick="playSecretMusic(); showGallery('video')">VIDEOS</button>
-        <button class="tab-btn" onclick="showChat()">✉️</button>
-        
+        <button class="tab-btn active" onclick="showGallery('all')">ALL</button>
+        <button class="tab-btn" onclick="showGallery('photo')">PHOTOS</button>
+        <button class="tab-btn" onclick="showGallery('video')">VIDEOS</button>
+        <button class="tab-btn" onclick="showChat(event)">✉️</button>
     </div>
 </header>
 
@@ -123,23 +109,27 @@
     <iframe id="bg-track" src="https://www.youtube.com/embed/IgM1lAXppwI?enablejsapi=1&loop=1&playlist=IgM1lAXppwI" allow="autoplay"></iframe>
 </div>
 
-<div class="container" id="main-gallery">
-<div id="chat-area" style="display: none !important; width: 100%; max-width: 900px; margin: 40px auto; border: 2px solid #d4af37; border-radius: 15px; background: #000;">
-    <h2 style="color: #d4af37; padding: 20px;">☠️ LEGACY CHAT ☠️</h2>
-    <iframe src="https://deadsimplechat.com/VcwE7MpUc" width="100%" height="600px" frameborder="0"></iframe>
+<div class="container" id="main-gallery"></div>
+
+<div id="chat-area">
+    <div class="chat-box-border">
+        <h2 style="color: var(--gold); letter-spacing: 5px; padding: 15px 0; margin: 0; background: rgba(212,175,55,0.1);">☠️ LEGACY CHAT ☠️</h2>
+        <iframe src="https://deadsimplechat.com/VcwE7MpUc" width="100%" height="600px" frameborder="0"></iframe>
+    </div>
 </div>
-</div>
+
 <footer>
-    © 2026 JAGIRDAR PAWAN | ☠️ LEGACY ☠️
+    © 2026 JAGIRDAR | SAKHT LAUNDA LEGACY ☠️
 </footer>
 
 <script>
-const container = document.getElementById('main-gallery');
+    const container = document.getElementById('main-gallery');
+    const chatArea = document.getElementById('chat-area');
     const user = "jagirdar4898-hue";
     const repo = "Memories-";
     const folder = "gallery";
 
-    // 1. Music Logic
+    // 1. Music Controls
     function playSecretMusic() {
         const iframe = document.getElementById("bg-track");
         if(iframe) iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
@@ -153,52 +143,38 @@ const container = document.getElementById('main-gallery');
         if(iframe) iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
     }
 
-    // 2. Chat Function (Simplified & Strong)
+    // 2. Chat View Logic
     function showChat(e) {
         if(e) e.preventDefault();
         
-        // Buttons ka style badlo
+        // Button Active State
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         if(e && e.target) e.target.classList.add('active');
 
-        // Gallery ko gayab karo
-        const galleryElement = document.getElementById('main-gallery');
-        if(galleryElement) {
-            galleryElement.style.setProperty('display', 'none', 'important');
-        }
-
-        // Chat ko dikhao
-        const chatElement = document.getElementById('chat-area');
-        if(chatElement) {
-            chatElement.style.setProperty('display', 'block', 'important');
-            console.log("Chat box is now visible");
-        } else {
-            alert("Chat Area Not Found! HTML mein id='chat-area' check karein.");
-        }
+        // Toggle: Hide Gallery, Show Chat
+        container.style.display = 'none';
+        chatArea.style.display = 'block';
         
         playSecretMusic();
     }
 
-    // 3. Gallery Function
+    // 3. Gallery View Logic
     async function showGallery(category) {
-        // UI Updates
+        // UI Button Styling
         if(window.event && window.event.target.tagName === 'BUTTON') {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             window.event.target.classList.add('active');
         }
 
-        // Gallery dikhao aur Chat chhupao
-        const galleryElement = document.getElementById('main-gallery');
-        const chatElement = document.getElementById('chat-area');
-        
-        if(galleryElement) galleryElement.style.display = 'grid';
-        if(chatElement) chatElement.style.setProperty('display', 'none', 'important');
+        // Toggle: Show Gallery, Hide Chat
+        container.style.display = 'grid';
+        chatArea.style.display = 'none';
 
-        container.innerHTML = '<div style="grid-column: 1/-1; color: var(--gold); font-size: 1.5rem; padding:50px;">☠️ LOADING THE LEGACY...</div>';
+        container.innerHTML = '<div style="grid-column: 1/-1; color: var(--gold); font-size: 1.5rem; padding: 50px;">☠️ LOADING THE LEGACY...</div>';
         
         let htmlContent = "";
 
-        // HARDCODED MEMORIES (1-16)
+        // HARDCODED LOCAL FILES (1-16)
         if(category === 'all' || category === 'photo') {
             for (let i = 1; i <= 13; i++) {
                 htmlContent += `<div class="card"><img src="${i}.jpg" onerror="this.src='${i}.jpeg'" loading="lazy"><div class="label">MEMORY ${i}</div></div>`;
@@ -210,7 +186,7 @@ const container = document.getElementById('main-gallery');
             });
         }
 
-        // DYNAMIC GITHUB SYNC
+        // GITHUB DYNAMIC SYNC (Reverse Order)
         try {
             const res = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${folder}`);
             let files = await res.json();
@@ -227,12 +203,13 @@ const container = document.getElementById('main-gallery');
                     htmlContent += `<div class="card">${media}<div class="label">${file.name}</div></div>`;
                 }
             });
-        } catch (e) { console.log("Syncing..."); }
+        } catch (e) { console.log("GitHub sync error"); }
 
         container.innerHTML = htmlContent;
     }
 
     window.onload = () => showGallery('all');
 </script>
+
 </body>
-    </html>
+</html>
