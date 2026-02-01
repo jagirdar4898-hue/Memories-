@@ -115,7 +115,10 @@
         }
     });
 
-    function openUpload() { if(!auth.currentUser.isAnonymous) myWidget.open(); else alert("Please Sign-in to Post!"); }
+    function openUpload() { 
+    if(sessionStorage.getItem('guestMode') === 'true') alert("Guest cannot post. Login with Google!");
+    else myWidget.open(); 
+        }
 
     async function loadFullLegacy() {
         const container = document.getElementById('main-gallery');
