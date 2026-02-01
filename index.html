@@ -3,24 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JAGIRDAR | PAWAN SINGH RAJPUROHIT | LEGENDARY GALLERY</title>
-    <meta name="description" content="Official JAGIRDAR Gallery. Pawan Singh Rajpurohit, Jain School Osian, Arts Class 12, 2025-26.">
-    <meta name="keywords" content="JAGIRDAR, Pawan Singh Rajpurohit, Jain School Osian, Arts Class 12, Year 2025 26">
+    
+    <title>JAGIRDAR 4898 | PAWAN SINGH RAJPUROHIT | OFFICIAL GALLERY</title>
+    <meta name="description" content="Official JAGIRDAR 4898 Legacy Portal. Memories of Pawan Singh Rajpurohit, Jain School Osian, Arts Class 12 (2025-26).">
+    <meta name="keywords" content="JAGIRDAR 4898, Jagirdar, Pawan Singh Rajpurohit, Jagirdar Pawan, Jain School Osian, Osian Arts Class 12, Jagirdar Legacy 2026">
+    <link rel="canonical" href="https://jagirdar4898-hue.github.io/Memories-/" />
 
     <style>
         :root { --gold: #d4af37; --black: #050505; --red: #ff4d4d; }
         body { margin: 0; background: var(--black); color: white; font-family: 'Segoe UI', sans-serif; text-align: center; }
         
-        /* Login Screen */
-        #login-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+        /* Loading Overlay */
+        #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; display: flex; align-items: center; justify-content: center; color: var(--gold); letter-spacing: 5px; font-weight: bold; }
+
+        #login-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; display: none; align-items: center; justify-content: center; flex-direction: column; }
         .login-box { background: rgba(255,255,255,0.05); padding: 40px; border: 1px solid var(--gold); border-radius: 15px; backdrop-filter: blur(10px); }
         .login-btn { padding: 12px 25px; margin: 10px; cursor: pointer; font-weight: bold; border-radius: 5px; width: 220px; display: block; border: none; }
 
         header { padding: 30px 10px; position: sticky; top: 0; background: rgba(5,5,5,0.9); z-index: 100; backdrop-filter: blur(10px); border-bottom: 1px solid rgba(212,175,55,0.2); }
         .tabs { display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; }
-        .tab-btn { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 8px 15px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        .tab-btn.active { background: var(--gold); color: black; }
-        .plus-btn { font-size: 1.5rem; padding: 5px 15px !important; border-radius: 50%; }
+        .tab-btn { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 8px 15px; cursor: pointer; font-weight: bold; transition: 0.3s; border-radius: 5px; }
+        .tab-btn.active { background: var(--gold); color: black; box-shadow: 0 0 10px var(--gold); }
+        .plus-btn { font-size: 1.5rem; padding: 2px 15px !important; border-radius: 50%; font-weight: bold; }
 
         .container { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; padding: 20px; max-width: 1400px; margin: auto; }
         .card { border: 1px solid rgba(212,175,55,0.1); overflow: hidden; background: #111; border-radius: 10px; position: relative; }
@@ -40,6 +44,8 @@
 </head>
 <body>
 
+<div id="loader">☠️ JAGIRDAR...</div>
+
 <div id="login-screen">
     <h1 style="color: var(--gold); letter-spacing: 12px;">JAGIRDAR</h1>
     <div class="login-box">
@@ -55,14 +61,14 @@
             <button class="tab-btn active" id="gal-link" onclick="showGalleryView()">GALLERY</button>
             <button class="tab-btn" onclick="showChatView()">CHAT ✉️</button>
             <button class="tab-btn plus-btn" onclick="openUpload()">+</button>
-            <button class="tab-btn" onclick="auth.signOut()" style="border-color:var(--red); color:var(--red);">LOGOUT</button>
+            <button class="tab-btn" onclick="handleLogout()" style="border-color:var(--red); color:var(--red);">LOGOUT</button>
         </div>
     </header>
 
     <div class="container" id="main-gallery"></div>
     <div id="chat-area"><iframe src="https://deadsimplechat.com/VcwE7MpUc" width="100%" height="600px" frameborder="0"></iframe></div>
 
-    <footer>© 2026 JAGIRDAR LEGACY | PAWAN SINGH RAJPUROHIT ☠️</footer>
+    <footer>© 2026 JAGIRDAR 4898 | PAWAN SINGH RAJPUROHIT ☠️</footer>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
@@ -87,12 +93,16 @@
     const CLOUD_NAME = "dd9wtjaso"; 
     const UPLOAD_PRESET = "ml_default";
 
+    // ☠️ PRO PERSISTENCE LOGIC
     auth.onAuthStateChanged(user => {
+        document.getElementById('loader').style.display = 'none';
         if (user) {
+            localStorage.setItem('isJagirdarLogged', 'true');
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('main-content').style.display = 'block';
             loadFullLegacy();
         } else {
+            localStorage.removeItem('isJagirdarLogged');
             document.getElementById('login-screen').style.display = 'flex';
             document.getElementById('main-content').style.display = 'none';
         }
@@ -100,8 +110,9 @@
 
     function loginGoogle() { auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()); }
     function loginGuest() { auth.signInAnonymously(); }
+    function handleLogout() { if(confirm("Logout?")) { auth.signOut(); } }
 
-    // Upload Widget
+    // Cloudinary Widget
     var myWidget = cloudinary.createUploadWidget({
         cloudName: CLOUD_NAME, uploadPreset: UPLOAD_PRESET, theme: "black"
     }, (error, result) => { 
@@ -113,17 +124,19 @@
         }
     });
 
-    function openUpload() {
-        if(auth.currentUser.isAnonymous) return alert("Guest cannot upload!");
-        myWidget.open();
-    }
+    function openUpload() { if(!auth.currentUser.isAnonymous) myWidget.open(); else alert("Please Sign-in to Post!"); }
 
     async function loadFullLegacy() {
         const container = document.getElementById('main-gallery');
-        container.innerHTML = "☠️ LOADING...";
+        container.innerHTML = "☠️ SYNCING LEGACY...";
         let finalHTML = "";
 
-        // 1. Fetch Old Photos from GitHub
+        const snap = await db.collection('posts').orderBy('createdAt', 'desc').get();
+        snap.forEach(doc => {
+            const data = doc.data();
+            finalHTML += createCard(doc.id, data.url, data.type, (auth.currentUser && auth.currentUser.uid === data.owner));
+        });
+
         try {
             const gitRes = await fetch(`https://api.github.com/repos/jagirdar4898-hue/Memories-/contents/gallery`);
             const gitFiles = await gitRes.json();
@@ -131,18 +144,9 @@
                 const id = btoa(file.name).replace(/=/g, "");
                 finalHTML += createCard(id, file.download_url, file.name.endsWith('.mp4') ? 'video' : 'photo', false);
             });
-        } catch(e) { console.log("Git error"); }
+        } catch(e) {}
 
-        // 2. Fetch New Posts from Firebase
-        const snap = await db.collection('posts').orderBy('createdAt', 'desc').get();
-        snap.forEach(doc => {
-            const data = doc.data();
-            const isOwner = auth.currentUser && auth.currentUser.uid === data.owner;
-            finalHTML = createCard(doc.id, data.url, data.type, isOwner) + finalHTML;
-        });
-
-        container.innerHTML = finalHTML;
-        // Load interactions for all
+        container.innerHTML = finalHTML || "Gallery is empty.";
         snap.forEach(doc => { updateLikesUI(doc.id); loadComments(doc.id); });
     }
 
@@ -157,13 +161,13 @@
             </div>
             <div class="comment-section" id="comments-${id}"></div>
             <div class="comment-input-area">
-                <input class="comment-input" id="input-${id}" placeholder="Comment...">
-                <button onclick="addComment('${id}')" style="background:var(--gold); border:none; padding:5px;">➤</button>
+                <input class="comment-input" id="input-${id}" placeholder="Add a comment...">
+                <button onclick="addComment('${id}')" style="background:var(--gold); border:none; padding:5px; border-radius:3px;">➤</button>
             </div>
         </div>`;
     }
 
-    // Tab Logic
+    // Navigation
     function showGalleryView() {
         document.getElementById('chat-area').style.display = 'none';
         document.getElementById('main-gallery').style.display = 'grid';
@@ -177,12 +181,8 @@
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     }
 
-    async function deletePost(id) {
-        if(confirm("Delete post?")) { await db.collection('posts').doc(id).delete(); location.reload(); }
-    }
-
     async function toggleLike(id) {
-        if(auth.currentUser.isAnonymous) return;
+        if(auth.currentUser.isAnonymous) return alert("Sign-in to Like!");
         const ref = db.collection('likes_v2').doc(id).collection('users').doc(auth.currentUser.uid);
         const doc = await ref.get();
         if(doc.exists) await ref.delete(); else await ref.set({l:true});
@@ -191,8 +191,7 @@
 
     async function updateLikesUI(id) {
         const snap = await db.collection('likes_v2').doc(id).collection('users').get();
-        const el = document.getElementById(`like-${id}`);
-        if(el) el.innerText = snap.size;
+        const el = document.getElementById(`like-${id}`); if(el) el.innerText = snap.size;
     }
 
     async function addComment(id) {
@@ -205,13 +204,13 @@
     }
 
     async function loadComments(id) {
-        const box = document.getElementById(`comments-${id}`);
-        if(!box) return;
+        const box = document.getElementById(`comments-${id}`); if(!box) return;
         const snap = await db.collection('comments_v2').doc(id).collection('list').orderBy('time', 'desc').limit(5).get();
         box.innerHTML = snap.docs.map(d => `<div><b>${d.data().user}:</b> ${d.data().text}</div>`).join('');
     }
 
     function shareMedia(url) { window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(url)}`); }
+    async function deletePost(id) { if(confirm("Delete this post?")) { await db.collection('posts').doc(id).delete(); location.reload(); } }
 </script>
 </body>
 </html>
