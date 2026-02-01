@@ -124,12 +124,11 @@
 </div>
 
 <div class="container" id="main-gallery">
-<div id="chat-area" style="display: none; width: 100%; text-align: center;">
-    <h2 style="color: #d4af37;">☠️ LEGACY CHAT ☠️</h2>
+<div id="chat-area" style="display: none !important; width: 100%; max-width: 900px; margin: 40px auto; border: 2px solid #d4af37; border-radius: 15px; background: #000;">
+    <h2 style="color: #d4af37; padding: 20px;">☠️ LEGACY CHAT ☠️</h2>
     <iframe src="https://deadsimplechat.com/VcwE7MpUc" width="100%" height="600px" frameborder="0"></iframe>
-    </div>
-    </div>
-
+</div>
+</div>
 <footer>
     © 2026 JAGIRDAR PAWAN | ☠️ LEGACY ☠️
 </footer>
@@ -154,33 +153,46 @@ const container = document.getElementById('main-gallery');
         if(iframe) iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
     }
 
-    // 2. Chat Function (Har haal mein chalne wala)
+    // 2. Chat Function (Simplified & Strong)
     function showChat(e) {
-        if(e) e.preventDefault(); // Page refresh hone se rokne ke liye
-
-        // Button Active Style
+        if(e) e.preventDefault();
+        
+        // Buttons ka style badlo
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         if(e && e.target) e.target.classList.add('active');
 
-        // Toggle: Gallery OFF, Chat ON
-        document.getElementById('main-gallery').style.setProperty('display', 'none', 'important');
-        document.getElementById('chat-area').style.setProperty('display', 'block', 'important');
+        // Gallery ko gayab karo
+        const galleryElement = document.getElementById('main-gallery');
+        if(galleryElement) {
+            galleryElement.style.setProperty('display', 'none', 'important');
+        }
+
+        // Chat ko dikhao
+        const chatElement = document.getElementById('chat-area');
+        if(chatElement) {
+            chatElement.style.setProperty('display', 'block', 'important');
+            console.log("Chat box is now visible");
+        } else {
+            alert("Chat Area Not Found! HTML mein id='chat-area' check karein.");
+        }
         
-        console.log("☠️ Legacy Chat Loaded");
         playSecretMusic();
     }
 
     // 3. Gallery Function
     async function showGallery(category) {
-        // Button Active Style
+        // UI Updates
         if(window.event && window.event.target.tagName === 'BUTTON') {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             window.event.target.classList.add('active');
         }
 
-        // Toggle: Gallery ON, Chat OFF
-        document.getElementById('main-gallery').style.display = 'grid';
-        document.getElementById('chat-area').style.display = 'none';
+        // Gallery dikhao aur Chat chhupao
+        const galleryElement = document.getElementById('main-gallery');
+        const chatElement = document.getElementById('chat-area');
+        
+        if(galleryElement) galleryElement.style.display = 'grid';
+        if(chatElement) chatElement.style.setProperty('display', 'none', 'important');
 
         container.innerHTML = '<div style="grid-column: 1/-1; color: var(--gold); font-size: 1.5rem; padding:50px;">☠️ LOADING THE LEGACY...</div>';
         
@@ -215,16 +227,10 @@ const container = document.getElementById('main-gallery');
                     htmlContent += `<div class="card">${media}<div class="label">${file.name}</div></div>`;
                 }
             });
-        } catch (e) { console.log("GitHub sync wait..."); }
+        } catch (e) { console.log("Syncing..."); }
 
         container.innerHTML = htmlContent;
     }
-    // Force click binding
-document.addEventListener('click', function(e) {
-    if(e.target && e.target.innerText === '✉️') {
-        showChat(e);
-    }
-});
 
     window.onload = () => showGallery('all');
 </script>
