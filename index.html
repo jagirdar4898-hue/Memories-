@@ -129,7 +129,6 @@
     const repo = "Memories-";
     const folder = "gallery";
 
-    // 1. Music Controls
     function playSecretMusic() {
         const iframe = document.getElementById("bg-track");
         if(iframe) iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
@@ -143,38 +142,43 @@
         if(iframe) iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
     }
 
-    // 2. Chat View Logic
+    // ☠️ FORCE SHOW CHAT
     function showChat(e) {
         if(e) e.preventDefault();
         
-        // Button Active State
+        // Buttons highlight
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         if(e && e.target) e.target.classList.add('active');
 
-        // Toggle: Hide Gallery, Show Chat
+        // Sabse Pehle Gallery hatao
         container.style.display = 'none';
-        chatArea.style.display = 'block';
+        
+        // Ab Chat dikhao (With full power)
+        const chatBox = document.getElementById('chat-area');
+        if(chatBox) {
+            chatBox.setAttribute('style', 'display: block !important; visibility: visible !important; opacity: 1 !important; min-height: 700px;');
+            console.log("Chat Forced Open");
+        } else {
+            alert("Bhai, 'chat-area' wala div nahi mil raha code mein!");
+        }
         
         playSecretMusic();
     }
 
-    // 3. Gallery View Logic
     async function showGallery(category) {
-        // UI Button Styling
         if(window.event && window.event.target.tagName === 'BUTTON') {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             window.event.target.classList.add('active');
         }
 
-        // Toggle: Show Gallery, Hide Chat
+        // Gallery ON, Chat OFF
         container.style.display = 'grid';
-        chatArea.style.display = 'none';
+        const chatBox = document.getElementById('chat-area');
+        if(chatBox) chatBox.style.setProperty('display', 'none', 'important');
 
-        container.innerHTML = '<div style="grid-column: 1/-1; color: var(--gold); font-size: 1.5rem; padding: 50px;">☠️ LOADING THE LEGACY...</div>';
+        container.innerHTML = '<div style="grid-column: 1/-1; color: var(--gold); font-size: 1.5rem; padding: 50px;">☠️ LOADING...</div>';
         
         let htmlContent = "";
-
-        // HARDCODED LOCAL FILES (1-16)
         if(category === 'all' || category === 'photo') {
             for (let i = 1; i <= 13; i++) {
                 htmlContent += `<div class="card"><img src="${i}.jpg" onerror="this.src='${i}.jpeg'" loading="lazy"><div class="label">MEMORY ${i}</div></div>`;
@@ -182,29 +186,25 @@
         }
         if(category === 'all' || category === 'video') {
             [14, 15, 16].forEach(v => {
-                htmlContent += `<div class="card"><video controls onplay="pauseMusic()" onpause="resumeMusic()"><source src="${v}.mp4"></video><div class="label">LEGACY VIDEO ${v}</div></div>`;
+                htmlContent += `<div class="card"><video controls onplay="pauseMusic()" onpause="resumeMusic()"><source src="${v}.mp4"></video><div class="label">VIDEO ${v}</div></div>`;
             });
         }
 
-        // GITHUB DYNAMIC SYNC (Reverse Order)
         try {
             const res = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${folder}`);
             let files = await res.json();
             files.reverse(); 
-
             files.forEach(file => {
                 const name = file.name.toLowerCase();
                 if(name === 'index.txt' || name === '.ds_store') return;
                 const isImg = name.endsWith('.jpg') || name.endsWith('.jpeg') || name.endsWith('.png') || name.endsWith('.webp');
                 const isVid = name.endsWith('.mp4') || name.endsWith('.mov');
-
                 if ((category === 'all') || (category === 'photo' && isImg) || (category === 'video' && isVid)) {
                     let media = isImg ? `<img src="${file.download_url}" loading="lazy">` : `<video controls onplay="pauseMusic()" onpause="resumeMusic()"><source src="${file.download_url}"></video>`;
                     htmlContent += `<div class="card">${media}<div class="label">${file.name}</div></div>`;
                 }
             });
-        } catch (e) { console.log("GitHub sync error"); }
-
+        } catch (e) { }
         container.innerHTML = htmlContent;
     }
 
