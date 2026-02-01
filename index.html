@@ -94,22 +94,13 @@
     const UPLOAD_PRESET = "ml_default";
 
     // ☠️ PRO PERSISTENCE LOGIC
-    auth.onAuthStateChanged(user => {
-        document.getElementById('loader').style.display = 'none';
-        if (user) {
-            localStorage.setItem('isJagirdarLogged', 'true');
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('main-content').style.display = 'block';
-            loadFullLegacy();
-        } else {
-            localStorage.removeItem('isJagirdarLogged');
-            document.getElementById('login-screen').style.display = 'flex';
-            document.getElementById('main-content').style.display = 'none';
-        }
-    });
+    
 
     function loginGoogle() { auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()); }
-    function loginGuest() { auth.signInAnonymously(); }
+    function loginGuest() { 
+    sessionStorage.setItem('guestMode', 'true'); // Ab ye temporary hai
+    location.reload(); 
+    }
     function handleLogout() { if(confirm("Logout?")) { auth.signOut(); } }
 
     // Cloudinary Widget
@@ -134,7 +125,18 @@
         const snap = await db.collection('posts').orderBy('createdAt', 'desc').get();
         snap.forEach(doc => {
             const data = doc.data();
-            finalHTML += createCard(doc.id, data.url, data.type, (auth.currentUser && auth.currentUser.uid === data.owner));
+            finalHTML += createCard(dauth.onAuthStateChanged(user => {
+    document.getElementById('loader').style.display = 'none';
+    const isGuest = sessionStorage.getItem('guestMode') === 'true'; // Temporary check
+    
+    if (user || isGuest) {
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('main-content').style.display = 'block';
+        loadFullLegacy();
+    } else {
+        document.getElementById('login-screen').style.display = 'flex';
+    }
+});oc.id, data.url, data.type, (auth.currentUser && auth.currentUser.uid === data.owner));
         });
 
         try {
