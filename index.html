@@ -4,41 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JAGIRDAR | PAWAN SINGH RAJPUROHIT | LEGENDARY GALLERY</title>
-    
-    <meta name="description" content="Official JAGIRDAR Gallery by Pawan Singh Rajpurohit. Jain School Osian, Arts Class 12, Year 2025-26. Explore the legacy.">
-    <meta name="keywords" content="JAGIRDAR, Pawan Singh Rajpurohit, Jagirdar Pawan, Jain School Osian, Arts Class 12, Year 2025 26, Jagirdar Gallery, Pawan Singh Osian">
-    <meta name="author" content="Pawan Singh Rajpurohit">
-    <meta name="robots" content="index, follow">
+    <meta name="description" content="Official JAGIRDAR Gallery. Pawan Singh Rajpurohit, Jain School Osian, Arts Class 12, 2025-26.">
+    <meta name="keywords" content="JAGIRDAR, Pawan Singh Rajpurohit, Jain School Osian, Arts Class 12, Year 2025 26">
 
     <style>
         :root { --gold: #d4af37; --black: #050505; --red: #ff4d4d; }
-        body { margin: 0; background: var(--black); color: white; font-family: 'Segoe UI', sans-serif; text-align: center; overflow-x: hidden; }
+        body { margin: 0; background: var(--black); color: white; font-family: 'Segoe UI', sans-serif; text-align: center; }
         
+        /* Login Screen */
         #login-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; display: flex; align-items: center; justify-content: center; flex-direction: column; }
-        .login-box { background: rgba(255,255,255,0.05); padding: 40px; border: 1px solid var(--gold); border-radius: 15px; backdrop-filter: blur(10px); text-align: center; }
-        .login-btn { padding: 12px 25px; margin: 10px; cursor: pointer; font-weight: bold; border-radius: 5px; width: 220px; display: block; border: none; transition: 0.3s; }
+        .login-box { background: rgba(255,255,255,0.05); padding: 40px; border: 1px solid var(--gold); border-radius: 15px; backdrop-filter: blur(10px); }
+        .login-btn { padding: 12px 25px; margin: 10px; cursor: pointer; font-weight: bold; border-radius: 5px; width: 220px; display: block; border: none; }
 
-        header { padding: 40px 20px; }
-        .tab-btn { background: transparent; border: 2px solid var(--gold); color: var(--gold); padding: 10px 25px; cursor: pointer; margin: 5px; transition: 0.4s; font-weight: bold; }
-        .tab-btn.active { background: var(--gold); color: black; box-shadow: 0 0 15px var(--gold); }
-        
-        .upload-section { background: #111; padding: 25px; margin: 20px auto; max-width: 500px; border: 2px dashed var(--gold); border-radius: 10px; }
-        
-        .container { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; padding: 20px; max-width: 1400px; margin: auto; }
-        .card { border: 1px solid rgba(212,175,55,0.1); overflow: hidden; background: #111; border-radius: 10px; position: relative; transition: 0.3s; }
-        .card:hover { transform: translateY(-5px); border-color: var(--gold); }
+        header { padding: 30px 10px; position: sticky; top: 0; background: rgba(5,5,5,0.9); z-index: 100; backdrop-filter: blur(10px); border-bottom: 1px solid rgba(212,175,55,0.2); }
+        .tabs { display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .tab-btn { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 8px 15px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .tab-btn.active { background: var(--gold); color: black; }
+        .plus-btn { font-size: 1.5rem; padding: 5px 15px !important; border-radius: 50%; }
+
+        .container { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; padding: 20px; max-width: 1400px; margin: auto; }
+        .card { border: 1px solid rgba(212,175,55,0.1); overflow: hidden; background: #111; border-radius: 10px; position: relative; }
         .card img, .card video { width: 100%; height: 320px; object-fit: cover; }
         
-        .actions { display: flex; justify-content: space-around; padding: 12px; border-top: 1px solid #222; }
-        .action-btn { background: none; border: none; color: var(--gold); cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
-        .del-btn { color: var(--red) !important; font-size: 0.8rem !important; }
+        .actions { display: flex; justify-content: space-around; padding: 10px; border-top: 1px solid #222; }
+        .action-btn { background: none; border: none; color: var(--gold); cursor: pointer; font-size: 1.1rem; }
+        .del-btn { color: var(--red) !important; font-size: 0.8rem; }
 
-        .comment-section { padding: 12px; text-align: left; background: #0a0a0a; max-height: 120px; overflow-y: auto; font-size: 0.85rem; border-top: 1px solid #222; }
-        .comment-input-area { padding: 10px; display: flex; gap: 5px; }
-        .comment-input { flex: 1; background: #222; border: 1px solid var(--gold); color: white; padding: 8px; border-radius: 5px; }
+        .comment-section { padding: 10px; text-align: left; background: #0a0a0a; max-height: 80px; overflow-y: auto; font-size: 0.8rem; border-top: 1px solid #222; }
+        .comment-input-area { padding: 8px; display: flex; gap: 5px; }
+        .comment-input { flex: 1; background: #222; border: 1px solid var(--gold); color: white; padding: 5px; font-size: 0.8rem; }
         
-        #chat-area { display: none; padding: 20px; max-width: 900px; margin: auto; }
-        footer { padding: 60px; color: var(--gold); opacity: 0.6; font-size: 0.8rem; letter-spacing: 2px; }
+        #chat-area { display: none; padding: 20px; }
+        footer { padding: 40px; color: var(--gold); opacity: 0.6; font-size: 0.8rem; }
     </style>
 </head>
 <body>
@@ -46,25 +43,21 @@
 <div id="login-screen">
     <h1 style="color: var(--gold); letter-spacing: 12px;">JAGIRDAR</h1>
     <div class="login-box">
-        <button class="login-btn" style="background: #fff; color: #000;" onclick="loginGoogle()">SIGN IN WITH GOOGLE</button>
+        <button class="login-btn" style="background: #fff; color: #000;" onclick="loginGoogle()">SIGN IN WITH Google</button>
         <button class="login-btn" style="background: transparent; border: 1px solid var(--gold); color: var(--gold);" onclick="loginGuest()">CONTINUE AS GUEST</button>
     </div>
 </div>
 
 <div id="main-content" style="display: none;">
     <header>
-        <h1 style="color: var(--gold); letter-spacing: 8px;">JAGIRDAR</h1>
+        <h1 style="color: var(--gold); letter-spacing: 5px; margin-bottom: 20px;">JAGIRDAR</h1>
         <div class="tabs">
-            <button class="tab-btn active" onclick="location.reload()">GALLERY</button>
-            <button class="tab-btn" onclick="showChat(event)">CHAT ✉️</button>
+            <button class="tab-btn active" id="gal-link" onclick="showGalleryView()">GALLERY</button>
+            <button class="tab-btn" onclick="showChatView()">CHAT ✉️</button>
+            <button class="tab-btn plus-btn" onclick="openUpload()">+</button>
             <button class="tab-btn" onclick="auth.signOut()" style="border-color:var(--red); color:var(--red);">LOGOUT</button>
         </div>
     </header>
-
-    <div class="upload-section" id="upload-panel">
-        <button id="upload_widget" style="background: var(--gold); border:none; padding: 15px 30px; cursor:pointer; font-weight:bold; border-radius: 5px; font-size: 1rem;">📤 POST NEW MEMORY</button>
-        <p style="font-size: 0.7rem; color: gray; margin-top: 10px;">Only logged-in users can post photos/videos.</p>
-    </div>
 
     <div class="container" id="main-gallery"></div>
     <div id="chat-area"><iframe src="https://deadsimplechat.com/VcwE7MpUc" width="100%" height="600px" frameborder="0"></iframe></div>
@@ -75,7 +68,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-<script src="https://upload-widget.cloudinary.com/global/all.js" type="text/javascript"></script>
+<script src="https://upload-widget.cloudinary.com/global/all.js"></script>
 
 <script>
     const firebaseConfig = {
@@ -91,7 +84,6 @@
     const auth = firebase.auth();
     const db = firebase.firestore();
 
-    // ☠️ CLOUDINARY UPDATED CONFIG
     const CLOUD_NAME = "dd9wtjaso"; 
     const UPLOAD_PRESET = "ml_default";
 
@@ -99,7 +91,7 @@
         if (user) {
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('main-content').style.display = 'block';
-            loadGallery();
+            loadFullLegacy();
         } else {
             document.getElementById('login-screen').style.display = 'flex';
             document.getElementById('main-content').style.display = 'none';
@@ -109,127 +101,117 @@
     function loginGoogle() { auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()); }
     function loginGuest() { auth.signInAnonymously(); }
 
-    // Cloudinary Upload Widget Setup
+    // Upload Widget
     var myWidget = cloudinary.createUploadWidget({
-        cloudName: CLOUD_NAME, 
-        uploadPreset: UPLOAD_PRESET,
-        sources: ['local', 'url', 'camera'],
-        googleApiKey: '<image_search_google_api_key>',
-        multiple: false,
-        theme: "minimal"
+        cloudName: CLOUD_NAME, uploadPreset: UPLOAD_PRESET, theme: "black"
     }, (error, result) => { 
         if (!error && result && result.event === "success") { 
             db.collection('posts').add({
-                url: result.info.secure_url,
-                type: result.info.resource_type,
-                owner: auth.currentUser.uid,
-                ownerName: auth.currentUser.displayName || "Jagirdar User",
-                createdAt: Date.now()
-            }).then(() => {
-                alert("Posted successfully!");
-                location.reload();
-            });
+                url: result.info.secure_url, type: result.info.resource_type,
+                owner: auth.currentUser.uid, createdAt: Date.now()
+            }).then(() => location.reload());
         }
     });
 
-    document.getElementById("upload_widget").addEventListener("click", function(){
-        if(auth.currentUser.isAnonymous) return alert("Guest users cannot upload. Please Sign-in with Google.");
+    function openUpload() {
+        if(auth.currentUser.isAnonymous) return alert("Guest cannot upload!");
         myWidget.open();
-    }, false);
+    }
 
-    async function loadGallery() {
+    async function loadFullLegacy() {
         const container = document.getElementById('main-gallery');
-        container.innerHTML = "☠️ FETCHING LEGACY...";
-        const snap = await db.collection('posts').orderBy('createdAt', 'desc').get();
-        
-        let html = "";
-        if(snap.empty) { container.innerHTML = "No memories posted yet. Be the first!"; return; }
+        container.innerHTML = "☠️ LOADING...";
+        let finalHTML = "";
 
+        // 1. Fetch Old Photos from GitHub
+        try {
+            const gitRes = await fetch(`https://api.github.com/repos/jagirdar4898-hue/Memories-/contents/gallery`);
+            const gitFiles = await gitRes.json();
+            gitFiles.reverse().forEach(file => {
+                const id = btoa(file.name).replace(/=/g, "");
+                finalHTML += createCard(id, file.download_url, file.name.endsWith('.mp4') ? 'video' : 'photo', false);
+            });
+        } catch(e) { console.log("Git error"); }
+
+        // 2. Fetch New Posts from Firebase
+        const snap = await db.collection('posts').orderBy('createdAt', 'desc').get();
         snap.forEach(doc => {
             const data = doc.data();
-            const id = doc.id;
             const isOwner = auth.currentUser && auth.currentUser.uid === data.owner;
-
-            html += `
-            <div class="card">
-                ${data.type === 'video' ? `<video controls src="${data.url}"></video>` : `<img src="${data.url}" loading="lazy">`}
-                <div class="actions">
-                    <button class="action-btn" onclick="toggleLike('${id}')">
-                        <span id="heart-${id}" style="transition:0.3s;">❤️</span> 
-                        <span id="like-${id}">0</span>
-                    </button>
-                    <button class="action-btn" onclick="shareMedia('${data.url}')">🔗 SHARE</button>
-                    ${isOwner ? `<button class="action-btn del-btn" onclick="deletePost('${id}')">🗑️ DELETE</button>` : ''}
-                </div>
-                <div class="comment-section" id="comments-${id}">Loading comments...</div>
-                <div class="comment-input-area">
-                    <input class="comment-input" id="input-${id}" placeholder="Write a comment...">
-                    <button onclick="addComment('${id}')" style="background:var(--gold); border:none; padding:8px; cursor:pointer; border-radius:5px;">➤</button>
-                </div>
-            </div>`;
-            setTimeout(() => { updateLikesUI(id); loadComments(id); }, 100);
+            finalHTML = createCard(doc.id, data.url, data.type, isOwner) + finalHTML;
         });
-        container.innerHTML = html;
+
+        container.innerHTML = finalHTML;
+        // Load interactions for all
+        snap.forEach(doc => { updateLikesUI(doc.id); loadComments(doc.id); });
+    }
+
+    function createCard(id, url, type, isOwner) {
+        return `
+        <div class="card">
+            ${type === 'video' ? `<video controls src="${url}"></video>` : `<img src="${url}" loading="lazy">`}
+            <div class="actions">
+                <button class="action-btn" onclick="toggleLike('${id}')">❤️ <span id="like-${id}">0</span></button>
+                <button class="action-btn" onclick="shareMedia('${url}')">🔗</button>
+                ${isOwner ? `<button class="action-btn del-btn" onclick="deletePost('${id}')">🗑️</button>` : ''}
+            </div>
+            <div class="comment-section" id="comments-${id}"></div>
+            <div class="comment-input-area">
+                <input class="comment-input" id="input-${id}" placeholder="Comment...">
+                <button onclick="addComment('${id}')" style="background:var(--gold); border:none; padding:5px;">➤</button>
+            </div>
+        </div>`;
+    }
+
+    // Tab Logic
+    function showGalleryView() {
+        document.getElementById('chat-area').style.display = 'none';
+        document.getElementById('main-gallery').style.display = 'grid';
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('gal-link').classList.add('active');
+    }
+
+    function showChatView() {
+        document.getElementById('main-gallery').style.display = 'none';
+        document.getElementById('chat-area').style.display = 'block';
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     }
 
     async function deletePost(id) {
-        if(confirm("Are you sure you want to delete your post?")) {
-            await db.collection('posts').doc(id).delete();
-            location.reload();
-        }
+        if(confirm("Delete post?")) { await db.collection('posts').doc(id).delete(); location.reload(); }
     }
 
     async function toggleLike(id) {
-        if(auth.currentUser.isAnonymous) return alert("Login to Like!");
-        const uid = auth.currentUser.uid;
-        const likeRef = db.collection('posts').doc(id).collection('likes').doc(uid);
-        const doc = await likeRef.get();
-
-        if(doc.exists) {
-            await likeRef.delete();
-        } else {
-            await likeRef.set({liked: true});
-        }
+        if(auth.currentUser.isAnonymous) return;
+        const ref = db.collection('likes_v2').doc(id).collection('users').doc(auth.currentUser.uid);
+        const doc = await ref.get();
+        if(doc.exists) await ref.delete(); else await ref.set({l:true});
         updateLikesUI(id);
     }
 
     async function updateLikesUI(id) {
-        const snap = await db.collection('posts').doc(id).collection('likes').get();
-        document.getElementById(`like-${id}`).innerText = snap.size;
-        
-        if(auth.currentUser) {
-            const userLiked = await db.collection('posts').doc(id).collection('likes').doc(auth.currentUser.uid).get();
-            document.getElementById(`heart-${id}`).style.filter = userLiked.exists ? "grayscale(0)" : "grayscale(1)";
-        }
+        const snap = await db.collection('likes_v2').doc(id).collection('users').get();
+        const el = document.getElementById(`like-${id}`);
+        if(el) el.innerText = snap.size;
     }
 
     async function addComment(id) {
         const input = document.getElementById(`input-${id}`);
-        if(!input.value || auth.currentUser.isAnonymous) return alert("Please login to comment!");
-        
-        await db.collection('posts').doc(id).collection('comments').add({
-            text: input.value,
-            user: auth.currentUser.displayName || "Jagirdar User",
-            time: Date.now()
+        if(!input.value || auth.currentUser.isAnonymous) return;
+        await db.collection('comments_v2').doc(id).collection('list').add({
+            text: input.value, user: auth.currentUser.displayName || "Jagirdar", time: Date.now()
         });
-        input.value = '';
-        loadComments(id);
+        input.value = ''; loadComments(id);
     }
 
     async function loadComments(id) {
         const box = document.getElementById(`comments-${id}`);
-        const snap = await db.collection('posts').doc(id).collection('comments').orderBy('time', 'desc').limit(5).get();
-        if(snap.empty) { box.innerHTML = "No comments yet."; return; }
-        box.innerHTML = snap.docs.map(d => `<div><b style="color:var(--gold)">${d.data().user}:</b> ${d.data().text}</div>`).join('');
+        if(!box) return;
+        const snap = await db.collection('comments_v2').doc(id).collection('list').orderBy('time', 'desc').limit(5).get();
+        box.innerHTML = snap.docs.map(d => `<div><b>${d.data().user}:</b> ${d.data().text}</div>`).join('');
     }
 
-    function shareMedia(url) { window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent("Check out this JAGIRDAR Memory: " + url)}`); }
-    function showChat(e) {
-        if(e) e.preventDefault();
-        document.getElementById('main-gallery').style.display = 'none';
-        document.getElementById('upload-panel').style.display = 'none';
-        document.getElementById('chat-area').style.display = 'block';
-    }
+    function shareMedia(url) { window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(url)}`); }
 </script>
 </body>
 </html>
