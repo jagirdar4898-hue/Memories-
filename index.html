@@ -260,7 +260,12 @@
         <div class="card">
             ${type === 'video' ? `<video controls src="${url}"></video>` : `<img src="${url}" loading="lazy">`}
             <div class="actions">
-                <button class="action-btn" onclick="toggleLike('${id}')">❤️ <span id="like-${id}">0</span></button>
+                <div class="yt-like-container">
+    <button id="btn-${id}" class="yt-like-btn" onclick="toggleLike('${id}')">
+        <span class="heart-icon">👍🏻</span> 
+        <span class="count-text" id="like-${id}">0</span>
+    </button>
+</div>
                 <button class="action-btn" onclick="shareMedia('${url}')">🔗</button>
                 ${isOwner ? `<button class="action-btn del-btn" onclick="deletePost('${id}')">🗑️</button>` : ''}
             </div>
