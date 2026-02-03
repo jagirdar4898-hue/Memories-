@@ -299,8 +299,7 @@
         document.getElementById('me-view').style.display = 'block';
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     }
-
-    async function toggleLike(id) {
+async function toggleLike(id) {
         if(sessionStorage.getItem('guestMode') === 'true') return alert("Sign-in to Like!");
         const ref = db.collection('likes_v2').doc(id).collection('users').doc(auth.currentUser.uid);
         const doc = await ref.get();
@@ -309,8 +308,22 @@
     }
 
     async function updateLikesUI(id) {
+        // 1. Likes ka count fetch karna
         const snap = await db.collection('likes_v2').doc(id).collection('users').get();
-        const el = document.getElementById(`like-${id}`); if(el) el.innerText = snap.size;
+        const el = document.getElementById(`like-${id}`); 
+        const btn = document.getElementById(`btn-${id}`); // Naya YouTube button ki ID
+        
+        if(el) el.innerText = snap.size;
+
+        // 2. Check karna ki user ne like kiya hai ya nahi (Gold color ke liye)
+        if (auth.currentUser && btn) {
+            const userLike = await db.collection('likes_v2').doc(id).collection('users').doc(auth.currentUser.uid).get();
+            if (userLike.exists) {
+                btn.classList.add('active'); // Button Gold ho jayega
+            } else {
+                btn.classList.remove('active'); // Button normal ho jayega
+            }
+        }
     }
 
     async function addComment(id) {
