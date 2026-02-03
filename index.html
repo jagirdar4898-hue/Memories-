@@ -93,7 +93,6 @@
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <script src="https://upload-widget.cloudinary.com/global/all.js"></script>
-
 <script>
     const firebaseConfig = {
         apiKey: "AIzaSyChMaUpvqhOwLwePpPv-X-24jFzQmRfrZs",
@@ -111,7 +110,6 @@
     const CLOUD_NAME = "dd9wtjaso"; 
     const UPLOAD_PRESET = "ml_default";
 
-    // ☠️ PRO PERSISTENCE LOGIC (Fixed Location)
     auth.onAuthStateChanged(user => {
         document.getElementById('loader').style.display = 'none';
         const isGuest = sessionStorage.getItem('guestMode') === 'true'; 
@@ -144,10 +142,15 @@
         cloudName: CLOUD_NAME, uploadPreset: UPLOAD_PRESET, theme: "black"
     }, (error, result) => { 
         if (!error && result && result.event === "success") { 
+            // ☠️ Prompt user for a name so they can add # for priority
+            let fileName = prompt("Enter a name/caption (Use # at start for Priority):", "New Post");
             db.collection('posts').add({
-                url: result.info.secure_url, type: result.info.resource_type,
+                url: result.info.secure_url, 
+                type: result.info.resource_type,
+                name: fileName || "Untitled",
                 owner: auth.currentUser ? auth.currentUser.uid : 'guest', 
-                createdAt: Date.now()
+                createdAt: Date.now(),
+                likesCount: 0 // For easy sorting later
             }).then(() => location.reload());
         }
     });
@@ -160,24 +163,52 @@
     async function loadFullLegacy() {
         const container = document.getElementById('main-gallery');
         container.innerHTML = "☠️ SYNCING LEGACY...";
-        let finalHTML = "";
+        let allItems = [];
 
         try {
-            const snap = await db.collection('posts').orderBy('createdAt', 'desc').get();
-            snap.forEach(doc => {
+            // 1. Firebase Posts Fetch
+            const snap = await db.collection('posts').get();
+            for (let doc of snap.docs) {
                 const data = doc.data();
-                finalHTML += createCard(doc.id, data.url, data.type, (auth.currentUser && auth.currentUser.uid === data.owner));
-            });
+                // Likes count fetch karna zaroori hai sorting ke liye
+                const likesSnap = await db.collection('likes_v2').doc(doc.id).collection('users').get();
+                allItems.push({ id: doc.id, ...data, likes: likesSnap.size, source: 'firebase' });
+            }
 
+            // 2. GitHub Files Fetch
             const gitRes = await fetch(`https://api.github.com/repos/jagirdar4898-hue/Memories-/contents/gallery`);
             const gitFiles = await gitRes.json();
-            gitFiles.reverse().forEach(file => {
+            gitFiles.forEach(file => {
                 const id = btoa(file.name).replace(/=/g, "");
-                finalHTML += createCard(id, file.download_url, file.name.endsWith('.mp4') ? 'video' : 'photo', false);
+                allItems.push({
+                    id: id, url: file.download_url, 
+                    type: file.name.endsWith('.mp4') ? 'video' : 'photo',
+                    name: file.name, likes: 0, source: 'github'
+                });
+            });
+
+            // ☠️ MASTER SORTING LOGIC ☠️
+            allItems.sort((a, b) => {
+                const nameA = a.name || "";
+                const nameB = b.name || "";
+                const isPriorityA = nameA.startsWith('#');
+                const isPriorityB = nameB.startsWith('#');
+
+                if (isPriorityA && !isPriorityB) return -1;
+                if (!isPriorityA && isPriorityB) return 1;
+                return (b.likes || 0) - (a.likes || 0);
+            });
+
+            // 3. Render HTML
+            let finalHTML = "";
+            allItems.forEach(item => {
+                const isOwner = (auth.currentUser && auth.currentUser.uid === item.owner);
+                finalHTML += createCard(item.id, item.url, item.type, isOwner);
             });
 
             container.innerHTML = finalHTML || "Gallery is empty.";
-            snap.forEach(doc => { updateLikesUI(doc.id); loadComments(doc.id); });
+            allItems.forEach(item => { if(item.source === 'firebase') { updateLikesUI(item.id); loadComments(item.id); } });
+
         } catch(e) {
             console.log(e);
             container.innerHTML = "Error loading gallery.";
@@ -203,6 +234,7 @@
 
     function showGalleryView() {
         document.getElementById('chat-area').style.display = 'none';
+        document.getElementById('me-view').style.display = 'none'; // ME view hide karein
         document.getElementById('main-gallery').style.display = 'grid';
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.getElementById('gal-link').classList.add('active');
@@ -210,7 +242,16 @@
 
     function showChatView() {
         document.getElementById('main-gallery').style.display = 'none';
+        document.getElementById('me-view').style.display = 'none';
         document.getElementById('chat-area').style.display = 'block';
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    }
+
+    // Naya ME view function
+    function showMeView() {
+        document.getElementById('main-gallery').style.display = 'none';
+        document.getElementById('chat-area').style.display = 'none';
+        document.getElementById('me-view').style.display = 'block';
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     }
 
@@ -244,6 +285,6 @@
 
     function shareMedia(url) { window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(url)}`); }
     async function deletePost(id) { if(confirm("Delete this post?")) { await db.collection('posts').doc(id).delete(); location.reload(); } }
-</script>
+    </script>
 </body>
 </html>
