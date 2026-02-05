@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        :root { --gold: #d4af37; --black: #050505; }
+        body { background: var(--black); color: white; font-family: sans-serif; margin: 0; padding: 10px; overflow: hidden; }
+        #messages { height: 80vh; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; }
+        .msg { margin-bottom: 12px; max-width: 80%; padding: 10px; border-radius: 12px; font-size: 0.9rem; position: relative; }
+        .mine { align-self: flex-end; background: var(--gold); color: black; border-bottom-right-radius: 2px; }
+        .theirs { align-self: flex-start; background: #222; border: 1px solid var(--gold); border-bottom-left-radius: 2px; }
+        .user-name { font-size: 0.65rem; color: #aaa; margin-bottom: 4px; display: block; }
+        .input-area { display: flex; gap: 8px; padding: 10px; background: #111; position: fixed; bottom: 0; left: 0; right: 0; }
+        input { flex: 1; background: #222; border: 1px solid var(--gold); color: white; padding: 12px; border-radius: 20px; outline: none; }
+        button { background: var(--gold); border: none; padding: 0 20px; border-radius: 20px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div id="Messages"></div>
+    <div class="input-area">
+        <input type="text" id="msgInput" placeholder="Write as JAGIRDAR...">
+        <button onclick="send()">➤</button>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyChMaUpvqhOwLwePpPv-X-24jFzQmRfrZs",
+            authDomain: "jagirdar-c39e8.firebaseapp.com",
+            projectId: "jagirdar-c39e8",
+            storageBucket: "jagirdar-c39e8.firebasestorage.app",
+            messagingSenderId: "379511970061",
+            appId: "1:379511970061:web:abb7e3bda9d76617687844"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+
+        function send() {
+            const val = document.getElementById('msgInput').value;
+            const user = auth.currentUser;
+            if(!val || !user || user.isAnonymous) return alert("Login to Chat!");
+            
+            db.collection('global_chat').add({
+                text: val,
+                sender: user.displayName || "Jagirdar",
+                uid: user.uid,
+                time: Date.now()
+            });
+            document.getElementById('msgInput').value = '';
+        }
+
+        db.collection('global_chat').orderBy('time', 'asc').limitToLast(30).onSnapshot(snap => {
+            const box = document.getElementById('messages');
+            box.innerHTML = '';
+            snap.forEach(doc => {
+                const d = doc.data();
+                const isMe = auth.currentUser && d.uid === auth.currentUser.uid;
+                box.innerHTML += `
+                    <div class="msg ${isMe ? 'mine' : 'theirs'}">
+                        <span class="user-name">${d.sender}</span>
+                        ${d.text}
+                    </div>`;
+            });
+            box.scrollTop = box.scrollHeight;
+        });
+    </script>
+</body>
+</html>
